@@ -73,7 +73,7 @@ vim.list_extend(spec, { { import = "plugins" } })
 -- the actual setup
 require("lazy").setup({
   spec = spec,
-  defaults = { lazy = true },
+  defaults = { lazy = false},
   performance = {
     rtp = { -- Use deflate to download faster from the plugin repos.
       disabled_plugins = {
