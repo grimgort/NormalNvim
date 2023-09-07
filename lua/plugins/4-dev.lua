@@ -342,7 +342,7 @@ return {
   {
     "mfussenegger/nvim-dap",
     enabled = vim.fn.has "win32" == 0,
-    event = "User BaseFile",
+event = "BufEnter",
     config = function(_, opts)
       local dap = require("dap")
 

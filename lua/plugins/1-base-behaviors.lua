@@ -184,7 +184,7 @@ return {
   -- you can delete all settings and just set "lazy = false".
   {
     "Shatur/neovim-session-manager",
-    event = "User BaseFile",
+    event = "BufEnter",
     cmd = "SessionManager",
     opts = function()
       local config = require('session_manager.config')
