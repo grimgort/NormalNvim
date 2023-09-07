@@ -518,11 +518,7 @@ return {
         "debugloop/telescope-undo.nvim",
         cmd = "Telescope",
       },
-      {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        enabled = vim.fn.executable "make" == 1,
-        build = "make",
-      },
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
     },
     cmd = "Telescope",
     opts = function()

@@ -463,6 +463,8 @@ maps.n["<leader>uA"] = {
   desc = "Animations",
 }
 
+maps.n["K"] = {"<PageDown>"}
+maps.n["J"] = {"<PageUp>"}
 -- fast movement (shifted) -------------------------------------------------
 maps.n["<S-Down>"] = {
   function() vim.api.nvim_feedkeys("7j", "n", true) end,
