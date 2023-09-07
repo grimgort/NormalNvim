@@ -293,13 +293,13 @@ maps.n["<leader>C"] = { -- Close buffer keeping the window.
 --   function() require("base.utils.buffer").close(0, true) end,
 --   desc = "Force close buffer",
 -- }
-maps.n["]b"] = {
+maps.n["<leader>bl"] = {
   function()
     require("base.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1)
   end,
   desc = "Next buffer",
 }
-maps.n["[b"] = {
+maps.n["<leader>bh"] = {
   function()
     require("base.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1))
   end,
@@ -414,8 +414,8 @@ maps.n["<S-Up>"] = {
 }
 
 -- tabs
-maps.n["]t"] = { function() vim.cmd.tabnext() end, desc = "Next tab" }
-maps.n["[t"] = { function() vim.cmd.tabprevious() end, desc = "Previous tab" }
+maps.n["<leader>jt"] = { function() vim.cmd.tabnext() end, desc = "Next tab" }
+maps.n["<leader>kt"] = { function() vim.cmd.tabprevious() end, desc = "Previous tab" }
 
 -- zen mode
 if is_available "zen-mode.nvim" then
@@ -567,9 +567,9 @@ end
 maps.n["<leader>g"] = icons.g
 if is_available "gitsigns.nvim" then
   maps.n["<leader>g"] = icons.g
-  maps.n["]g"] =
+  maps.n["<leader>jg"] =
   { function() require("gitsigns").next_hunk() end, desc = "Next Git hunk" }
-  maps.n["[g"] = {
+  maps.n["<leader>kg"] = {
     function() require("gitsigns").prev_hunk() end,
     desc = "Previous Git hunk",
   }

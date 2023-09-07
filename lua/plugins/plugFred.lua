@@ -2,6 +2,7 @@
 local disableVariable = true
 return {
   {
+    event = "BufEnter",
     "ggandor/leap.nvim",
     enabled = true,
     -- keys = {
@@ -38,12 +39,14 @@ return {
 
   {
     "numtostr/FTerm.nvim",
+    event = "BufEnter",
     config = function()
       require("plugins.configs.fterm")
     end,
   },
   {
     "sindrets/diffview.nvim",
+    event = "BufEnter",
     enabled = disableVariable,
     -- event = "BufRead",
   },
@@ -65,6 +68,7 @@ return {
 
   {
     "npxbr/glow.nvim",
+    event = "BufEnter",
     enabled = disableVariable,
     ft = { "markdown" },
     config = function()
@@ -73,6 +77,7 @@ return {
   },
   {
     "iamcco/markdown-preview.nvim",
+    event = "BufEnter",
     enabled = disableVariable,
     run = "cd app && npm install",
     ft = "markdown",
@@ -83,15 +88,19 @@ return {
 
   {
     "ray-x/starry.nvim",
+    event = "BufEnter",
     opts = function()
       vim.g.starry_style = "marianna"
       -- require("starry").setup()
     end,
     -- keys = { "<F2>" },
   },
-  { "simnalamburt/vim-mundo", enabled = disableVariable },
+  { "simnalamburt/vim-mundo", enabled = disableVariable
+    ,event = "BufEnter"
+  },
   {
     "rhysd/git-messenger.vim",
+    event = "BufEnter",
     disable = disableVariable,
     config = function()
       -- vim.api.nvim_command 'let g:git_messenger_include_diff="current"'
@@ -100,7 +109,9 @@ return {
       vim.api.nvim_command("let g:git_messenger_always_into_popup=v:true")
     end,
   },
-  { "xolox/vim-colorscheme-switcher", enabled = disableVariable, dependencies = { "xolox/vim-misc" } },
+  { "xolox/vim-colorscheme-switcher", enabled = disableVariable, dependencies = { "xolox/vim-misc" },
+    event = "VeryLazy",
+  },
   {
     "rhysd/devdocs.vim",
     enabled = disableVariable,
@@ -148,6 +159,7 @@ return {
   -- },
   {
     "NeogitOrg/neogit",
+    event = "VeryLazy",
     requires = "nvim-lua/plenary.nvim",
     config = function()
       require("plugins.configs.neogit")
@@ -163,6 +175,7 @@ return {
 
     {
       "renerocksai/telekasten.nvim",
+      event = "VeryLazy",
       enabled = true,
       config = function()
         require("plugins.configs.telekasten")
@@ -182,6 +195,7 @@ return {
     {
       "Civitasv/cmake-tools.nvim",
       enabled = true,
+    -- event = "VeryLazy",
       config = function()
         require("plugins.configs.cmakeTool")
       end,
@@ -498,24 +512,24 @@ return {
   --           set_jumps = true, -- whether to set jumps in the jumplist
   --           goto_next_start = {
   --             [",aj"] = "@function.outer",
-  --             ["]]"] = { query = "@class.outer", desc = "Next class start" },
+  --             ["<leader>j]"] = { query = "@class.outer", desc = "Next class start" },
   --             --
   --             -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queires.
-  --             ["]o"] = "@loop.*",
-  --             -- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
+  --             ["<leader>jo"] = "@loop.*",
+  --             -- ["<leader>jo"] = { query = { "@loop.inner", "@loop.outer" } }
   --             --
   --             -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
   --             -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
-  --             ["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
-  --             ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+  --             ["<leader>js"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
+  --             ["<leader>jz"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
   --           },
   --           goto_next_end = {
-  --             ["]M"] = "@function.outer",
-  --             ["]["] = "@class.outer",
+  --             ["<leader>jM"] = "@function.outer",
+  --             ["<leader>j["<leader>j = "@class.outer",
   --           },
   --           goto_previous_start = {
   --             [",ak"] = "@function.outer",
-  --             ["[["] = "@class.outer",
+  --             ["[["<leader>j = "@class.outer",
   --           },
   --           goto_previous_end = {
   --             ["[M"] = "@function.outer",
@@ -525,7 +539,7 @@ return {
   --           -- Use if you want more granular movements
   --           -- Make it even more gradual by adding multiple queries and regex.
   --           goto_next = {
-  --             ["]d"] = "@conditional.outer",
+  --             ["<leader>jd"] = "@conditional.outer",
   --           },
   --           goto_previous = {
   --             ["[d"] = "@conditional.outer",
@@ -663,6 +677,7 @@ return {
   {
     "AckslD/muren.nvim",
     config = true,
+    event = "VeryLazy"
   },
   -- {
   --   "google/executor.nvim",
