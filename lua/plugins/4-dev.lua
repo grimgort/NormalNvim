@@ -341,7 +341,7 @@ return {
   --  We currently ship most of them with nvim.
   {
     "mfussenegger/nvim-dap",
-    enabled = vim.fn.has "win32" == 0,
+    -- enabled = vim.fn.has "win32" == 0,
 event = "BufEnter",
     config = function(_, opts)
       local dap = require("dap")
