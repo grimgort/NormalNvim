@@ -25,5 +25,8 @@ return {
   --   },
   --   config = function(_, opts) require'lsp_signature'.setup(opts) end
   -- },
-
+{
+    "echasnovski/mini.animate",
+    enabled = false
+  },
 }
