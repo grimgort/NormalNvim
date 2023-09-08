@@ -44,5 +44,5 @@ return {
   -- It is used by the functions "delete" and "wipe" in
   -- ../base/utils/buffer.lua
   --
-  { "echasnovski/mini.bufremove",event = "BufEnter" },
+  { "echasnovski/mini.bufremove", event = "User BaseFile" },
 }

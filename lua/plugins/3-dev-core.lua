@@ -36,7 +36,7 @@ return {
       "nvim-treesitter/nvim-treesitter-textobjects",
       "JoosepAlviste/nvim-ts-context-commentstring",
     },
-event = "BufEnter",
+    event = "User BaseFile",
     cmd = {
       "TSBufDisable",
       "TSBufEnable",
@@ -135,7 +135,7 @@ event = "BufEnter",
   --  https://github.com/NvChad/nvim-colorizer.lua
   {
     "NvChad/nvim-colorizer.lua",
-event = "BufEnter",
+    event = "User BaseFile",
     cmd = {
       "ColorizerToggle",
       "ColorizerAttachToBuffer",
@@ -164,8 +164,7 @@ event = "BufEnter",
         end,
       },
     },
-
-event = "BufEnter",
+    event = "User BaseFile",
     config = function(_, _)
       local lsp = require "base.utils.lsp"
       local utils = require "base.utils"
@@ -293,7 +292,7 @@ event = "BufEnter",
         opts = { handlers = {} },
       },
     },
-event = "BufEnter",
+    event = "User BaseFile",
     opts = function()
       local nls = require "null-ls"
       return {

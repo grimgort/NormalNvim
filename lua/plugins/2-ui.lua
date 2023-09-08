@@ -29,7 +29,7 @@ return {
   -- https://github.com/folke/tokyonight.nvim
   {
     "Zeioth/tokyonight.nvim",
-    event = "BufEnter",
+    event = "User LoadColorSchemes",
     opts = {
       dim_inactive = true, -- dim inactive windows
     },
@@ -39,7 +39,7 @@ return {
   --  https://github.com/AstroNvim/astrotheme
   {
     "AstroNvim/astrotheme",
-    event = "BufEnter",
+    event = "User LoadColorSchemes",
     opts = {
       palette = "astrodark",
       plugins = { ["dashboard-nvim"] = true },
@@ -701,7 +701,7 @@ return {
   --  https://github.com/petertriho/nvim-scrollbar
   {
     "petertriho/nvim-scrollbar",
-    event = "BufEnter",
+    event = "User BaseFile",
     opts = {
       handlers = {
         gitsigns = true, -- gitsigns integration (display hunks)
@@ -725,7 +725,7 @@ return {
   --        disable it during the keybinding using vim.g.minianimate_disable = true
   {
     "echasnovski/mini.animate",
-event = "BufEnter",
+    event = "User BaseFile",
     enabled = not android,
     opts = function()
       -- don't use animate when scrolling with the mouse
