@@ -34,27 +34,27 @@ local is_available = utils.is_available
 -- 1. Events to load plugins faster → 'BaseFile'/'BaseGitFile':
 --    this is pretty much the same thing as the event 'BufEnter',
 --    but without increasing the startup time displayed in the greeter.
--- autocmd({ "BufReadPost", "BufNewFile", "BufWritePost" }, {
---   desc = "Nvim user events for file detection (BaseFile and BaseGitFile)",
---   group = augroup("file_user_events", { clear = true }),
---   callback = function(args)
---     local empty_buffer = vim.fn.resolve(vim.fn.expand "%") == ""
---     local greeter = vim.api.nvim_get_option_value("filetype", { buf = args.buf }) == "alpha"
---     local git_repo = utils.cmd({ "git", "-C", vim.fn.fnamemodify(vim.fn.resolve(vim.fn.expand "%"), ":p:h"), "rev-parse" }, false)
---
---     -- For any file exept empty buffer, or the greeter (alpha)
---     if not (empty_buffer or greeter) then
---       utils.event "File" -- Emit event 'BaseFile'
---
---       -- Is the buffer part of a git repo?
---       if git_repo then
---         utils.event "GitFile" -- Emit event 'BaseGitFile'
---         vim.api.nvim_del_augroup_by_name "file_user_events"
---       end
---
---     end
---   end,
--- })
+autocmd({ "BufReadPost", "BufNewFile", "BufWritePost" }, {
+  desc = "Nvim user events for file detection (BaseFile and BaseGitFile)",
+  group = augroup("file_user_events", { clear = true }),
+  callback = function(args)
+    local empty_buffer = vim.fn.resolve(vim.fn.expand "%") == ""
+    local greeter = vim.api.nvim_get_option_value("filetype", { buf = args.buf }) == "alpha"
+    local git_repo = utils.cmd({ "git", "-C", vim.fn.fnamemodify(vim.fn.resolve(vim.fn.expand "%"), ":p:h"), "rev-parse" }, false)
+
+    -- For any file exept empty buffer, or the greeter (alpha)
+    if not (empty_buffer or greeter) then
+      utils.event "File" -- Emit event 'BaseFile'
+
+      -- Is the buffer part of a git repo?
+      if git_repo then
+        utils.event "GitFile" -- Emit event 'BaseGitFile'
+        vim.api.nvim_del_augroup_by_name "file_user_events"
+      end
+
+    end
+  end,
+})
 
 -- 2. Save/restore window layout when possible.
 local view_group = augroup("auto_view", { clear = true })
