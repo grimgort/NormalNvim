@@ -74,10 +74,10 @@ return {
       manual_mode = false,
 
       -- Don't auto-chdir for specific filetypes.
-      exclude_filetype_chdir = {"", "OverseerList", "alpha"},
+      exclude_filetype_chdir = { "", "OverseerList", "alpha" },
 
       -- Don't auto-chdir for specific buftypes.
-      exclude_buftype_chdir = {"nofile", "terminal"},
+      exclude_buftype_chdir = { "nofile", "terminal" },
 
       --ignore_lsp = { "lua_ls" },
     },
@@ -104,7 +104,7 @@ return {
   -- By default it support neovim/aerial and others.
   {
     "stevearc/stickybuf.nvim",
- opts = {},
+    opts = {},
   },
 
   -- nvim-window-picker  [select buffer with a letter]
@@ -190,9 +190,9 @@ return {
     opts = function()
       local config = require('session_manager.config')
       return {
-        autoload_mode = config.AutoloadMode.Disabled,                        -- Do not autoload on startup.
-        autosave_last_session = false,                                       -- Don't auto save session on exit vim.
-        autosave_only_in_session = false,                                    -- We allow overriding sessions.
+        autoload_mode = config.AutoloadMode.Disabled, -- Do not autoload on startup.
+        autosave_last_session = false,                -- Don't auto save session on exit vim.
+        autosave_only_in_session = false,             -- We allow overriding sessions.
       }
     end,
     config = function(_, opts)
@@ -205,10 +205,10 @@ return {
       local autocmd = vim.api.nvim_create_autocmd
       autocmd({ 'BufWritePre' }, {
         group = augroup("session_manager_autosave_on_write", { clear = true }),
-        callback = function ()
+        callback = function()
           if vim.bo.filetype ~= 'git' and
-             not vim.bo.filetype ~= 'gitcommit' and
-             not vim.bo.filetype ~= 'gitrebase'
+              not vim.bo.filetype ~= 'gitcommit' and
+              not vim.bo.filetype ~= 'gitrebase'
           then
             -- Important: Be aware the next line will close anything non-buffer,
             -- (notifications, neotree, aerial...)
@@ -412,7 +412,7 @@ return {
             if node.type == "directory" or node:has_children() then
               if not node:is_expanded() then -- if unexpanded, expand
                 state.commands.toggle_node(state)
-              else -- if expanded and has children, seleect the next child
+              else                           -- if expanded and has children, seleect the next child
                 require("neo-tree.ui.renderer").focus_node(
                   state,
                   node:get_child_ids()[1]
@@ -542,20 +542,20 @@ return {
 
         -- only use indent until a file is opened
         return (filetype == "" or buftype == "nofile") and "indent"
-          or function(bufnr)
-            return require("ufo")
-                .getFolds(bufnr, "lsp")
-                :catch(
-                  function(err)
-                    return handleFallbackException(bufnr, err, "treesitter")
-                  end
-                )
-                :catch(
-                  function(err)
-                    return handleFallbackException(bufnr, err, "indent")
-                  end
-                )
-          end
+            or function(bufnr)
+              return require("ufo")
+                  .getFolds(bufnr, "lsp")
+                  :catch(
+                    function(err)
+                      return handleFallbackException(bufnr, err, "treesitter")
+                    end
+                  )
+                  :catch(
+                    function(err)
+                      return handleFallbackException(bufnr, err, "indent")
+                    end
+                  )
+            end
       end,
     },
   },
@@ -565,7 +565,7 @@ return {
   --  By default registers are deleted between sessions.
   {
     "AckslD/nvim-neoclip.lua",
-    requires = { {'nvim-telescope/telescope.nvim'} },
+    requires = { { 'nvim-telescope/telescope.nvim' } },
     config = function() require('neoclip').setup() end,
   },
 
