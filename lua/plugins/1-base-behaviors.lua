@@ -104,6 +104,7 @@ return {
   -- By default it support neovim/aerial and others.
   {
     "stevearc/stickybuf.nvim",
+ opts = {},
   },
 
   -- nvim-window-picker  [select buffer with a letter]
