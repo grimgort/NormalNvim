@@ -4,7 +4,7 @@ return {
   {
     event = "BufEnter",
     "ggandor/leap.nvim",
-    enabled = true,
+    enabled = false,
     -- keys = {
     --   {
     --     "e",
@@ -294,12 +294,12 @@ return {
   -- { "joechrisellis/lsp-format-modifications.nvim", dependencies = { "neovim/nvim-lspconfig" } },
   -- { "wellle/context.vim" },
   -- nvim-treesitter-context ne prend pas bien les elseif . attendre de nouveau dev cntext.vim a la place work
-  -- {
-  --   "lewis6991/nvim-treesitter-context",
-  --   config = function()
-  --     require("plugins.configs.nvim-treesitter-context")
-  --   end,
-  -- },
+  {
+    "lewis6991/nvim-treesitter-context",
+    config = function()
+      require("plugins.configs.nvim-treesitter-context")
+    end,
+  },
   {
     "skywind3000/asyncrun.vim",
     disable = disableVariable,
@@ -686,12 +686,12 @@ return {
   --     require("plugins.configs.executor")
   --   end,
   -- },
-  -- {
-  --   "noib3/nvim-oxi",
-  --   config = function()
-  --     -- require("nvim-oxi").setup()
-  --   end,
-  -- },
+  {
+    "noib3/nvim-oxi",
+    config = function()
+      -- require("nvim-oxi").setup()
+    end,
+  },
   -- {
   --   "numToStr/Comment.nvim",
   --   config = function()
@@ -704,19 +704,19 @@ return {
   --     require("themery").setup()
   --   end,
   -- },
-  -- {
-  --   "folke/flash.nvim",
-  --   event = "VeryLazy",
-  --   opts = {},
-  -- -- stylua: ignore
-  -- keys = {
-  --   { "e", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-  --   { "E", mode = { "n", "o", "x" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-  --   { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
-  --   { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-  --   { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
-  -- },
-  -- },
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    opts = {},
+  -- stylua: ignore
+  keys = {
+    { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+    { "S", mode = { "n", "o", "x" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+    { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+    { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+    { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+  },
+  },
   -- {
   --   "jackMort/ChatGPT.nvim", -- c'est payant
   --     event = "VeryLazy",
@@ -743,6 +743,13 @@ return {
   -- or leave it empty to use the default settings
   -- refer to the configuration section below
  },
-}
+},
+ {
+        "kdheepak/lazygit.nvim",
+        -- optional for floating window border decoration
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+    },
 }
 

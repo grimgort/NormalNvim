@@ -122,9 +122,9 @@ if not android then
   -- only useful when the option clipboard is commented on ./1-options.lua
   maps.n["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
   maps.x["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
-  maps.n["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
-  maps.x["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
-  maps.n["<C-p>"] = { '"+p<esc>', desc = "Paste from cliboard" }
+  -- maps.n["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
+    -- maps.x["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
+    maps.n["<C-p>"] = { '"+p<esc>', desc = "Paste from cliboard" }
 end
 
 -- Make 'c' key not copy to clipboard when changing a character.
@@ -343,11 +343,11 @@ maps.n["<leader>bd"] = {
   end,
   desc = "Delete buffer from tabline",
 }
-maps.n["<leader>bl"] = {
+maps.n["<leader>bH"] = {
   function() require("base.utils.buffer").close_left() end,
   desc = "Close all buffers to the left",
 }
-maps.n["<leader>br"] = {
+maps.n["<leader>bL"] = {
   function() require("base.utils.buffer").close_right() end,
   desc = "Close all buffers to the right",
 }
@@ -618,19 +618,19 @@ if is_available "vim-fugitive" then
   }
 end
 -- git client
-if vim.fn.executable "lazygit" == 1 then -- if lazygit exists, show it
-  maps.n["<leader>gg"] = {
-    function()
-      local git_dir = vim.fn.finddir(".git", vim.fn.getcwd() .. ";")
-      if git_dir ~= "" then
-        utils.toggle_term_cmd "lazygit"
-      else
-        utils.notify("Not a git repository", 4)
-      end
-    end,
-    desc = "ToggleTerm lazygit",
-  }
-end
+-- if vim.fn.executable "lazygit" == 1 then -- if lazygit exists, show it
+--   maps.n["<leader>gg"] = {
+--     function()
+--       local git_dir = vim.fn.finddir(".git", vim.fn.getcwd() .. ";")
+--       if git_dir ~= "" then
+--         utils.toggle_term_cmd "lazygit"
+--       else
+--         utils.notify("Not a git repository", 4)
+--       end
+--     end,
+--     desc = "ToggleTerm lazygit",
+--   }
+-- end
 if vim.fn.executable "gitui" == 1 then -- if gitui exists, show it
   maps.n["<leader>gg"] = {
     function()
