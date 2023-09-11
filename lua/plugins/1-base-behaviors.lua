@@ -24,7 +24,8 @@
 
 -- import custom icons
 local get_icon = require("base.utils").get_icon
-local windows = vim.fn.has('win32') == 1 -- true if on windows
+local windows = vim.fn.has('win32') == 1             -- true if on windows
+local android = vim.fn.isdirectory('/system') == 1   -- true if on android
 
 -- configures plugins
 return {
@@ -41,10 +42,21 @@ return {
     "kevinhwang91/rnvimr",
     cmd = { "RnvimrToggle" },
     enabled = not windows,
-    init = function()
-      -- vim.g.rnvimr_vanilla = 1 → Often solves issues in your ranger config.
-      vim.g.rnvimr_enable_picker = 1         -- if 1, will close rnvimr after choosing a file.
-      vim.g.rnvimr_ranger_cmd = { "ranger" } -- by using a shell script like TERM=foot ranger "$@" we can open terminals inside ranger.
+    config = function(_, opts)
+      -- vim.g.rnvimr_vanilla = 1            -- Often solves issues in your ranger config.
+      vim.g.rnvimr_enable_picker = 1         -- Close rnvimr after choosing a file.
+      vim.g.rnvimr_ranger_cmd = { "ranger" } -- By passing a script like TERM=foot ranger "$@" you can open terminals inside ranger.
+      if android then -- Open on full screenn
+        vim.g.rnvimr_layout = {
+          relative = "editor",
+          width = 200,
+          height = 100,
+          col = 0,
+          row = 0,
+          style = "minimal",
+        }
+      end
+      require("project_nvim").setup(opts)
     end,
   },
 
@@ -174,15 +186,6 @@ return {
 
   -- Session management [session]
   -- https://github.com/Shatur/neovim-session-manager
-  -- This plugin save your session when you write a buffer.
-  -- It also display a Telescope menu to restore saved sessions.
-  -- Sessions are saved by directory.
-  --
-  -- If you prefer to manually manage sessions using <space>S
-  -- you can disable autosaving sessions here.
-  --
-  -- If you prefer to load the last session automatically when opening nvim,
-  -- you can delete all settings and just set "lazy = false".
   {
     "Shatur/neovim-session-manager",
     event = "User BaseFile",
@@ -199,24 +202,14 @@ return {
       local session_manager = require('session_manager')
       session_manager.setup(opts)
 
-      -- Auto save session only on write buffer.
-      -- This avoid inconsistencies when closing multiple instances of the same session.
-      local augroup = vim.api.nvim_create_augroup
-      local autocmd = vim.api.nvim_create_autocmd
-      autocmd({ 'BufWritePre' }, {
-        group = augroup("session_manager_autosave_on_write", { clear = true }),
-        callback = function()
-          if vim.bo.filetype ~= 'git' and
-              not vim.bo.filetype ~= 'gitcommit' and
-              not vim.bo.filetype ~= 'gitrebase'
-          then
-            -- Important: Be aware the next line will close anything non-buffer,
-            -- (notifications, neotree, aerial...)
-            -- because saving that stuff would break the GUI on restore.
-            -- If this is important to you, use the event 'VimLeavePre' instead.
-            -- But doing so, your session won't be saved on power loss.
-            session_manager.save_current_session()
-          end
+      -- Auto save session
+      vim.api.nvim_create_autocmd({ 'VimLeavePre' }, {
+        group = vim.api.nvim_create_augroup(
+          "session_manager_save_session", { clear = true }),
+        callback = function ()
+          -- BUG: Don't change the autocmd event until this neovim bug is fixed
+          -- https://github.com/neovim/neovim/issues/12242
+          session_manager.save_current_session()
         end
       })
     end
