@@ -1,7 +1,8 @@
+
 if exists('g:GuiLoaded')
     GuiPopupmenu 0
     GuiTabline 0
-   GuiFont!  JetBrains\ Mono:h14
+    GuiFont!  JetBrains\ Mono:h14
   " GuiFont!  Cascadia\ Code:h14
    " silent! set  guifont=JetBrains\ Mono:h14
     " GuiFont! Consolas:h14
