@@ -60,7 +60,7 @@ local options = {
     history = 1000, -- Number of commands to remember in a history table (per buffer).
     swapfile = false, -- Ask what state to recover when opening a file that was not saved.
     wrap = true, -- Disable wrapping of lines longer than the width of window.
-    colorcolumn = "80", -- PEP8 like character limit vertical bar.
+    colorcolumn = "980", -- PEP8 like character limit vertical bar.
     mousescroll = "ver:1,hor:0", -- Disables hozirontal scroll in neovim.
     guicursor = "n:blinkon200,i-ci-ve:ver25", -- Enable cursor blink.
     autochdir = true, -- Use current file dir as working dir (See project.nvim).
@@ -72,7 +72,7 @@ local options = {
     mapleader = " ", -- Set leader key.
     maplocalleader = ",", -- Set default local leader key.
     autoformat_enabled = false, -- Enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled).
-    autopairs_enabled = false, -- Enable autopairs at start.
+    autopairs_enabled = true, -- Enable autopairs at start.
     inlay_hints_enabled = false, -- Enable LSP inlay_hints at startup.
     semantic_tokens_enabled = true, -- Enable LSP semantic tokens on startup.
     cmp_enabled = true, -- Enable completion at start.
@@ -81,7 +81,7 @@ local options = {
     highlighturl_enabled = true, -- Highlight URLs by default.
     icons_enabled = true, -- Disable icons in the UI (disable if no nerd font is available).
     lsp_handlers_enabled = true, -- Enable or disable default vim.lsp.handlers (hover and signatureHelp).
-    notifications_enabled = true, -- nvim notifications enabled/disabled.
+    notifications_enabled = false, -- nvim notifications enabled/disabled.
     big_file = { size = 1024 * 100, lines = 10000 }, -- For files bigger than this, disable 'treesitter'.
   },
   t = vim.t.bufs and vim.t.bufs or { bufs = vim.api.nvim_list_bufs() }, -- initialize buffers for the current tab.
