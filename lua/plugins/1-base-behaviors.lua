@@ -471,6 +471,8 @@ return {
         window = {
           width = 30,
           mappings = {
+            ["I"] = "fuzzy_finder",
+            ["/"] = false, -- disable space until we figure out which-key disabling
             ["<space>"] = false, -- disable space until we figure out which-key disabling
             ["<leader>kb"] = "prev_source",
             ["<leader>jb"] = "next_source",
@@ -591,7 +593,7 @@ return {
   --  https://github.com/phaazon/hop.nvim
   {
     "phaazon/hop.nvim",
-    cmd = { "HopWord" },
+    cmd = { "HopWord","HopChar1" },
     opts = { keys = "etovxqpdygfblzhckisuran" },
     config = function(_, opts)
       -- you can configure Hop the way you like here; see :h hop-config
