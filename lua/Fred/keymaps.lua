@@ -622,3 +622,7 @@ vim.keymap.set("n", "gpr", "<cmd>lua require('goto-preview').goto_preview_refere
 
 -- vim.keymap.set("n",  "<leader>j","]",{} )
 -- vim.keymap.set("n",  "<leader>k","[",{} )
+     vim.api.nvim_set_keymap("n", "s", "<cmd>HopChar1<cr>", { silent = true })
+       vim.api.nvim_set_keymap("n", "S", "<cmd>HopWord<cr>", { silent = true })
+      vim.api.nvim_set_keymap("v", "s", "<cmd>HopChar1<cr>", { silent = true })
+      vim.api.nvim_set_keymap("v", "S", "<cmd>HopWord<cr>", { silent = true })

@@ -1083,11 +1083,11 @@ if is_available "nvim-dap" then
     end,
     desc = "Conditional Breakpoint (S-F9)",
   }
-  maps.n["<leader>do"] =
+  maps.n["<leader>ds"] =
     { function() require("dap").step_over() end, desc = "Step Over (F10)" }
-  maps.n["<leader>do"] =
+  maps.n["<leader>da"] =
     { function() require("dap").step_back() end, desc = "Step Back (S-F10)" }
-  maps.n["<leader>db"] =
+  maps.n["<leader>di"] =
     { function() require("dap").step_into() end, desc = "Step Into (F11)" }
   maps.n["<leader>dO"] =
     { function() require("dap").step_out() end, desc = "Step Out (S-F11)" }
@@ -1115,7 +1115,9 @@ if is_available "nvim-dap" then
       end,
       desc = "Evaluate Input",
     }
-    maps.x["<leader>dE"] =
+    maps.n["<leader>de"] =
+      { function() require("dapui").eval() end, desc = "Evaluate Input" }
+    maps.x["<leader>de"] =
       { function() require("dapui").eval() end, desc = "Evaluate Input" }
     maps.n["<leader>du"] =
       { function() require("dapui").toggle() end, desc = "Debugger UI" }
