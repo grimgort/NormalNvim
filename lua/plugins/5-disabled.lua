@@ -29,8 +29,8 @@ return {
         "echasnovski/mini.animate",
         enabled = false
     },
-    {
-        "Shatur/neovim-session-manager",
-        enabled = false
-    }
+    -- {
+    --     "Shatur/neovim-session-manager",
+    --     enabled = false
+    -- }
 }
