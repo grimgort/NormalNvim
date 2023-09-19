@@ -56,6 +56,7 @@ telescope.setup({
         ["<A-k>"] = actions.cycle_history_prev,
         ["<S-k>"] = actions.preview_scrolling_up,
         ["<S-j>"] = actions.preview_scrolling_down,
+        -- ["<CR>"] = actions.git_track_branch
       },
       -- for normal mode
       n = {
@@ -67,6 +68,7 @@ telescope.setup({
         ["<A-j>"] = actions.cycle_history_next,
         ["<A-k>"] = actions.cycle_history_prev,
         ["q"] = require("telescope.actions").close,
+        -- ["<CR>"] = actions.git_track_branch
       },
     },
   },

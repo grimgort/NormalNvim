@@ -95,8 +95,11 @@ return {
     end,
     -- keys = { "<F2>" },
   },
-  { "simnalamburt/vim-mundo", enabled = disableVariable
-    ,event = "BufEnter"
+  {
+    "simnalamburt/vim-mundo",
+    enabled = disableVariable
+    ,
+    event = "BufEnter"
   },
   {
     "rhysd/git-messenger.vim",
@@ -109,7 +112,10 @@ return {
       vim.api.nvim_command("let g:git_messenger_always_into_popup=v:true")
     end,
   },
-  { "xolox/vim-colorscheme-switcher", enabled = disableVariable, dependencies = { "xolox/vim-misc" },
+  {
+    "xolox/vim-colorscheme-switcher",
+    enabled = disableVariable,
+    dependencies = { "xolox/vim-misc" },
     event = "VeryLazy",
   },
   {
@@ -165,72 +171,111 @@ return {
       require("plugins.configs.neogit")
     end,
   },
-    --   "kylechui/nvim-surround",
-    --   config = function()
-    --     require("nvim-surround").setup({
-    --       -- Configuration here, or leave empty to use defaults
-    --     })
-    --   end,
-    -- },
+  {
+    "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
+    end,
+  },
+  {
+    'echasnovski/mini.surround',
+    version = '*',
+    opts = {
+      mappings = {
+        add = ',sa',        -- Add surrounding in Normal and Visual modes
+        delete = ',sd',     -- Delete surrounding
+        find = ',sf',       -- Find surrounding (to the right)
+        find_left = ',sF',  -- Find surrounding (to the left)
+        highlight = ',sh',  -- Highlight surrounding
+        replace = ',sr',    -- Replace surrounding
+        update_n_lines = ',sn', -- Update `n_lines`
 
-    {
-      "renerocksai/telekasten.nvim",
-      event = "VeryLazy",
-      enabled = true,
-      config = function()
-        require("plugins.configs.telekasten")
-      end,
-    },
-    {
-      "max397574/better-escape.nvim",
-      config = function()
-        require("better_escape").setup()
-      end,
-    },
+        suffix_last = 'h',  -- Suffix to search with "prev" method
+        suffix_next = 'l',  -- Suffix to search with "next" method
+      },
 
-    { "tibabit/vim-templates" },
+    }
+  },
+  -- { 'echasnovski/mini.nvim', version = '*',
+  --     event = "VeryLazy",
+  -- opts={
+  --   mappings = {
+  --     add = ',aa', -- Add surrounding in Normal and Visual modes
+  --     delete = ',sd', -- Delete surrounding
+  --     find = ',sf', -- Find surrounding (to the right)
+  --     find_left = ',sF', -- Find surrounding (to the left)
+  --     highlight = ',sh', -- Highlight surrounding
+  --     replace = ',sr', -- Replace surrounding
+  --     update_n_lines = ',sn', -- Update `n_lines`
+  --
+  --     suffix_last = 'h', -- Suffix to search with "prev" method
+  --     suffix_next = 'l', -- Suffix to search with "next" method
+  --   },
+  --
+  --   },
+  --   },
+  {
+    "renerocksai/telekasten.nvim",
+    event = "VeryLazy",
+    enabled = true,
+    config = function()
+      require("plugins.configs.telekasten")
+    end,
+  },
+  {
+    "max397574/better-escape.nvim",
+    config = function()
+      require("better_escape").setup()
+    end,
+  },
 
-    -- { "numtostr/BufOnly.nvim", cmd = "BufOnly" },
+  { "tibabit/vim-templates" },
 
-    {
-      "Civitasv/cmake-tools.nvim",
-      enabled = true,
+  -- { "numtostr/BufOnly.nvim", cmd = "BufOnly" },
+
+  {
+    "Civitasv/cmake-tools.nvim",
+    enabled = true,
     -- event = "VeryLazy",
-      config = function()
-        require("plugins.configs.cmakeTool")
-      end,
-    },
-    -- {
-    --   "dnlhc/glance.nvim",
-    --   config = function()
-    --     require("glance").setup({
-    --       -- your configuration
-    --     })
-    --   end,
-    -- },
-    {
-      "mcchrish/zenbones.nvim",
-      -- Optionally install Lush. Allows for more configuration or extending the colorscheme
-      -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
-      -- In Vim, compat mode is turned on as Lush only works in Neovim.
-      requires = "rktjmp/lush.nvim",
-    },
-    -- {
-    --   "nvim-neotest/neotest",
-    --   requires = {
-    --     "nvim-lua/plenary.nvim",
-    --     "nvim-treesitter/nvim-treesitter",
-    --   },
-    --   config = function()
-    --     require("plugins.configs.neotest")
-    --   end,
-    -- },
-    -- {
-    --   "nvim-neotest/neotest-vim-test",
-    --   config = function()
-    --     require("plugins.configs.neotest-vim-test")
-    --   end,
-    -- },
+    config = function()
+      require("plugins.configs.cmakeTool")
+    end,
+  },
+  -- {
+  --   "dnlhc/glance.nvim",
+  --   config = function()
+  --     require("glance").setup({
+  --       -- your configuration
+  --     })
+  --   end,
+  -- },
+  {
+    "mcchrish/zenbones.nvim",
+    -- Optionally install Lush. Allows for more configuration or extending the colorscheme
+    -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
+    -- In Vim, compat mode is turned on as Lush only works in Neovim.
+    requires = "rktjmp/lush.nvim",
+  },
+  -- {
+  --   "nvim-neotest/neotest",
+  --   requires = {
+  --     "nvim-lua/plenary.nvim",
+  --     "nvim-treesitter/nvim-treesitter",
+  --   },
+  --   config = function()
+  --     require("plugins.configs.neotest")
+  --   end,
+  -- },
+  -- {
+  --   "nvim-neotest/neotest-vim-test",
+  --   config = function()
+  --     require("plugins.configs.neotest-vim-test")
+  --   end,
+  -- },
 
   -- {
   --   "nvimdev/lspsaga.nvim",
@@ -369,20 +414,20 @@ return {
         default_params = {
           -- Default module parameters with which `neovim.json` will be created.
           cmake = {
-            cmd = "cmake", -- CMake executable to use, can be changed using `:Task set_module_param cmake cmd`.
+            cmd = "cmake",                                    -- CMake executable to use, can be changed using `:Task set_module_param cmake cmd`.
             build_dir = tostring(Path:new("{cwd}", "build")), -- Build directory. The expressions `{cwd}`, `{os}` and `{build_type}` will be expanded with the corresponding text values. Could be a function that return the path to the build directory.
-            build_type = "Debug", -- Build type, can be changed using `:Task set_module_param cmake build_type`.
-            dap_name = "lldb", -- DAP configuration name from `require('dap').configurations`. If there is no such configuration, a new one with this name as `type` will be created.
-            args = { -- Task default arguments.
+            build_type = "Debug",                             -- Build type, can be changed using `:Task set_module_param cmake build_type`.
+            dap_name = "lldb",                                -- DAP configuration name from `require('dap').configurations`. If there is no such configuration, a new one with this name as `type` will be created.
+            args = {                                          -- Task default arguments.
               configure = { "-D", "CMAKE_EXPORT_COMPILE_COMMANDS=1" },
             },
           },
         },
-        save_before_run = false, -- If true, all files will be saved before executing a task.
+        save_before_run = false,     -- If true, all files will be saved before executing a task.
         params_file = "neovim.json", -- JSON file to store module and task parameters.
         quickfix = {
-          pos = "botright", -- Default quickfix position.
-          height = 12, -- Default height.
+          pos = "botright",          -- Default quickfix position.
+          height = 12,               -- Default height.
         },
         dap_open_command = function()
           return require("dap").repl.open()
@@ -737,21 +782,21 @@ return {
   --     require("copilot").setup()
   --   end,
   -- },
-{
- "folke/trouble.nvim",
- dependencies = { "nvim-tree/nvim-web-devicons" },
- opts = {
-  -- your configuration comes here
-  -- or leave it empty to use the default settings
-  -- refer to the configuration section below
- },
-},
- {
-        "kdheepak/lazygit.nvim",
-        -- optional for floating window border decoration
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
-    },
-}
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
 
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
+  },
+  {
+    "kdheepak/lazygit.nvim",
+    -- optional for floating window border decoration
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+  },
+}

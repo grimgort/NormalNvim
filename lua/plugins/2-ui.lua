@@ -524,22 +524,35 @@ return {
     opts = function()
       local get_icon = require("base.utils").get_icon
       local actions = require "telescope.actions"
+      local trouble = require("trouble.providers.telescope")
       local mappings = {
-        i = {
-          ["<C-n>"] = actions.cycle_history_next,
-          ["<C-p>"] = actions.cycle_history_prev,
-          ["<C-j>"] = actions.move_selection_next,
-          ["<C-k>"] = actions.move_selection_previous,
-          ["<ESC>"] = actions.close,
-          ["<C-c>"] = false,
-        },
-        n = { ["q"] = actions.close },
+          i = {
+        ["<c-t>"] = trouble.open_with_trouble,
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-k>"] = actions.move_selection_previous,
+        ["<A-j>"] = actions.cycle_history_next,
+        ["<A-k>"] = actions.cycle_history_prev,
+        ["<S-k>"] = actions.preview_scrolling_up,
+        ["<S-j>"] = actions.preview_scrolling_down,
+      },
+      -- for normal mode
+      n = {
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-k>"] = actions.move_selection_previous,
+        ["<c-t>"] = trouble.open_with_trouble,
+        ["<S-k>"] = actions.preview_scrolling_up,
+        ["<S-j>"] = actions.preview_scrolling_down,
+        ["<A-j>"] = actions.cycle_history_next,
+        ["<A-k>"] = actions.cycle_history_prev,
+        ["q"] = require("telescope.actions").close,
+    },
       }
       return {
         defaults = {
+          -- wrap_results = true,
           prompt_prefix = get_icon("Selected", 1),
           selection_caret = get_icon("Selected", 1),
-          path_display = { "truncate" },
+          -- path_display = { "absolute" },
           sorting_strategy = "ascending",
           layout_config = {
             horizontal = {

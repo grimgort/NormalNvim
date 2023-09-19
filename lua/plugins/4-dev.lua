@@ -402,33 +402,138 @@ event = "BufEnter",
         }
       }
 
-      -- C
-      dap.adapters.codelldb = {
-        type = 'server',
-        port = "${port}",
-        executable = {
-          command = vim.fn.stdpath('data')..'/mason/bin/codelldb',
-          args = {"--port", "${port}"},
-           detached = function() if windows then return false else return true end end,
-        }
-      }
-      dap.configurations.c = {
-        {
-          name = 'Launch',
-          type = 'codelldb',
-          request = 'launch',
-          program = function() -- Ask the user what executable wants to debug
-            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/bin/program', 'file')
-          end,
-          cwd = '${workspaceFolder}',
-          stopOnEntry = false,
-          args = {},
-        },
-      }
 
-      -- C++
-      dap.configurations.cpp = dap.configurations.c
+dap.adapters.cppdbg = {
+  id = "cppdbg",
+  type = "executable",
+  --[[ command = 'C:\\absolute\\path\\to\\cpptools\\extension\\debugAdapters\\bin\\OpenDebugAD7.exe', ]]
+  --[[ command = 'D:\\ftarroux\\AppData\\Local\\nvim-data\\mason\\bin\\OpenDebugAD7.cmd', ]]
+  command = "D:\\ftarroux\\AppData\\Local\\nvim-data\\mason\\bin\\OpenDebugAD7.cmd",
 
+  options = {
+    detached = false,
+  },
+}
+dap.adapters.codelldb = {
+  type = "server",
+  port = "${port}",
+  executable = {
+    -- CHANGE THIS to your path!
+    command = "D:\\ftarroux\\AppData\\Local\\nvim-data\\mason\\bin\\codelldb.cmd",
+    args = { "--port", "${port}" },
+    -- On windows you may have to uncomment this:
+    detached = false,
+  },
+}
+dap.adapters.lldb = {
+  type = 'executable',
+  command = 'lldb-vscode.exe', -- adjust as needed, must be absolute path
+  name = 'lldb'
+}
+dap.configurations.cpp = {
+  {
+    name = "cppdbgTest",
+    type = "cppdbg",
+    request = "launch",
+    -- program =
+    -- "D:/ftarroux/Documents/FRED/BaseGit/matisse_blessed/build/bin/Debug/UserCaseMatisseSingleLosOpticalData.exe",
+    program = "${workspaceFolder}\\build\\bin\\Debug\\MATISSE.exe",
+    args = { "D:\\ftarroux\\Documents\\FRED\\BaseGit\\matisse_fred\\BaseDeTest\\nua_6_9\\T350-NR-NA-6-9_1.scm",
+      "D:\\ftarroux\\Documents\\FRED\\BaseGit\\matisse_fred\\build\\matisse.cfg" },
+    cwd = '${workspaceFolder}/build',
+    stopAtEntry = true,
+    miDebuggerPath = 'D:/Intel/debugger/latest/gdb/intel64/bin/gdb-oneapi.exe',
+  },
+  {
+    name = 'Attach to gdbserver :1234',
+    type = 'cppdbg',
+    request = 'launch',
+    MIMode = 'gdb',
+    miDebuggerServerAddress = 'localhost:1234',
+    miDebuggerPath = 'D:/Intel/debugger/latest/gdb/intel64/bin/gdb-oneapi.exe',
+    cwd = '${workspaceFolder}/build',
+    program = function()
+  return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+    end,
+  },
+  {
+    name = 'lldbTest',
+    type = 'lldb',
+    request = 'launch',
+    program = function()
+  return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+    end,
+    cwd = '${workspaceFolder}',
+    stopOnEntry = false,
+    args = {},
+    -- 💀
+    -- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
+    --
+    --    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+    --
+    -- Otherwise you might get the following error:
+    --
+    --    Error on launch: Failed to attach to the target process
+    --
+    -- But you should be aware of the implications:
+    -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
+    -- runInTerminal = false,
+  },
+  --[[   name= "Windows Launch", ]]
+  --[[ 	type= "cppdbg", ]]
+  --[[ 	request= "launch", ]]
+  --[[ 	program= "${workspaceFolder}\\build\\bin\\Debug\\MATISSE.exe", ]]
+  --[[ 	stopAtEntry= true, ]]
+  --[[ 	cwd= "${workspaceFolder}\\build", ]]
+  --[[     args = {"D:\\ftarroux\\Documents\\FRED\\BaseGit\\matisse_fred\\BaseDeTest\\nua_6_9\\T350-NR-NA-6-9_1.scm","D:\\ftarroux\\Documents\\FRED\\BaseGit\\matisse_fred\\build\\matisse.cfg"} ]]
+  --[[ }, ]]
+  --[[ { ]]
+  --[[   name = 'Attach to gdbserver :1234', ]]
+  --[[   type = 'cppdbg', ]]
+  --[[   request = 'launch', ]]
+  --[[   MIMode = 'gdb', ]]
+  --[[   miDebuggerServerAddress = 'localhost:1234', ]]
+  --[[   miDebuggerPath = '/usr/bin/gdb', ]]
+  --[[   cwd = '${workspaceFolder}', ]]
+  --[[   program = function() ]]
+  --[[     return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file') ]]
+  --[[   end, ]]
+  --[[ }, ]]
+  {
+    name = "launch_matisse",
+    type = "codelldb",
+    request = "launch",
+
+    program = "${workspaceFolder}\\build\\bin\\Debug\\MATISSE.exe",
+    cwd = "${workspaceFolder}\\build",
+    args = {
+      function()
+  return vim.fn.input("argument: ", vim.fn.getcwd() .. "\\", "file")
+      end,
+      "${workspaceFolder}\\build\\matisse.cfg",
+    },
+    stopOnEntry = false,
+  },
+  {
+    name = "launch_other",
+    type = "codelldb",
+    request = "launch",
+    cwd = "${workspaceFolder}\\build",
+    args = {
+      function()
+  return vim.fn.input("argument: ", vim.fn.getcwd() .. "\\", "file")
+      end,
+      "${workspaceFolder}\\build\\matisse.cfg",
+    },
+    stopOnEntry = false,
+    program = function()
+  return vim.fn.input("executable: ", vim.fn.getcwd() .. "\\", "file")
+    end,
+  },
+}
+
+dap.configurations.c = dap.configurations.cpp
+dap.configurations.rust = dap.configurations.cpp
       -- Rust
       dap.configurations.rust = {
         {
