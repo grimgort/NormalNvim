@@ -20,8 +20,8 @@
 --       -> which-key                   [on-screen keybinding]
 
 local utils = require "base.utils"
-local windows = vim.fn.has('win32') == 1             -- true if on windows
-local android = vim.fn.isdirectory('/system') == 1   -- true if on android
+local windows = vim.fn.has('win32') == 1           -- true if on windows
+local android = vim.fn.isdirectory('/system') == 1 -- true if on android
 
 return {
 
@@ -225,10 +225,10 @@ return {
         opts = {
           disable_winbar_cb = function(args)
             return not require("base.utils.buffer").is_valid(args.buf)
-              or status.condition.buffer_matches({
-                buftype = { "terminal", "prompt", "nofile", "help", "quickfix" },
-                filetype = { "NvimTree", "neo%-tree", "dashboard", "Outline", "aerial" },
-              }, args.buf)
+                or status.condition.buffer_matches({
+                  buftype = { "terminal", "prompt", "nofile", "help", "quickfix" },
+                  filetype = { "NvimTree", "neo%-tree", "dashboard", "Outline", "aerial" },
+                }, args.buf)
           end,
         },
         statusline = { -- statusline
@@ -266,13 +266,13 @@ return {
           status.component.breadcrumbs { hl = status.hl.get_attributes("winbar", true) },
         },
         tabline = { -- bufferline
-          { -- file tree padding
+          {         -- file tree padding
             condition = function(self)
               self.winid = vim.api.nvim_tabpage_list_wins(0)[1]
               return status.condition.buffer_matches(
                 {
                   filetype = {
-                  "aerial", "dapui_.", "dap-repl", "neo%-tree", "NvimTree", "edgy"
+                    "aerial", "dapui_.", "dap-repl", "neo%-tree", "NvimTree", "edgy"
                   }
                 },
                 vim.api.nvim_win_get_buf(self.winid)
@@ -281,11 +281,11 @@ return {
             provider = function(self) return string.rep(" ", vim.api.nvim_win_get_width(self.winid) + 1) end,
             hl = { bg = "tabline_bg" },
           },
-          status.heirline.make_buflist(status.component.tabline_file_info()), -- component for each buffer tab
-          status.component.fill { hl = { bg = "tabline_bg" } }, -- fill the rest of the tabline with background color
-          { -- tab list
+          status.heirline.make_buflist(status.component.tabline_file_info()),     -- component for each buffer tab
+          status.component.fill { hl = { bg = "tabline_bg" } },                   -- fill the rest of the tabline with background color
+          {                                                                       -- tab list
             condition = function() return #vim.api.nvim_list_tabpages() >= 2 end, -- only show tabs if there are more than one
-            status.heirline.make_tablist { -- component for each tab
+            status.heirline.make_tablist {                                        -- component for each tab
               provider = status.provider.tabnr(),
               hl = function(self) return status.hl.get_attributes(status.heirline.tab_type(self, "tab"), true) end,
             },
@@ -518,7 +518,9 @@ return {
         "debugloop/telescope-undo.nvim",
         cmd = "Telescope",
       },
-      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
+      { 'nvim-telescope/telescope-fzf-native.nvim',
+        build =
+        'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
     },
     cmd = "Telescope",
     opts = function()
@@ -526,26 +528,26 @@ return {
       local actions = require "telescope.actions"
       local trouble = require("trouble.providers.telescope")
       local mappings = {
-          i = {
-        ["<c-t>"] = trouble.open_with_trouble,
-        ["<C-j>"] = actions.move_selection_next,
-        ["<C-k>"] = actions.move_selection_previous,
-        ["<A-j>"] = actions.cycle_history_next,
-        ["<A-k>"] = actions.cycle_history_prev,
-        ["<S-k>"] = actions.preview_scrolling_up,
-        ["<S-j>"] = actions.preview_scrolling_down,
-      },
-      -- for normal mode
-      n = {
-        ["<C-j>"] = actions.move_selection_next,
-        ["<C-k>"] = actions.move_selection_previous,
-        ["<c-t>"] = trouble.open_with_trouble,
-        ["<S-k>"] = actions.preview_scrolling_up,
-        ["<S-j>"] = actions.preview_scrolling_down,
-        ["<A-j>"] = actions.cycle_history_next,
-        ["<A-k>"] = actions.cycle_history_prev,
-        ["q"] = require("telescope.actions").close,
-    },
+        i = {
+          ["<c-t>"] = trouble.open_with_trouble,
+          ["<C-j>"] = actions.move_selection_next,
+          ["<C-k>"] = actions.move_selection_previous,
+          ["<A-j>"] = actions.cycle_history_next,
+          ["<A-k>"] = actions.cycle_history_prev,
+          ["<S-k>"] = actions.preview_scrolling_up,
+          ["<S-j>"] = actions.preview_scrolling_down,
+        },
+        -- for normal mode
+        n = {
+          ["<C-j>"] = actions.move_selection_next,
+          ["<C-k>"] = actions.move_selection_previous,
+          ["<c-t>"] = trouble.open_with_trouble,
+          ["<S-k>"] = actions.preview_scrolling_up,
+          ["<S-j>"] = actions.preview_scrolling_down,
+          ["<A-j>"] = actions.cycle_history_next,
+          ["<A-k>"] = actions.cycle_history_prev,
+          ["q"] = require("telescope.actions").close,
+        },
       }
       return {
         defaults = {
@@ -567,6 +569,11 @@ return {
             preview_cutoff = 120,
           },
           mappings = mappings,
+        },
+        pickers = {
+          colorscheme = {
+            enable_preview = true
+          }
         },
         extensions = {
           undo = {
@@ -649,7 +656,7 @@ return {
       )
     end,
     opts = {
-      input = { default_prompt = "➤ "},
+      input = { default_prompt = "➤ " },
       select = { backend = { "telescope", "builtin" } },
     },
   },

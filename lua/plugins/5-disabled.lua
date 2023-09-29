@@ -12,6 +12,7 @@ return {
     {
       "ray-x/lsp_signature.nvim",
       event = "User BaseFile",
+      enabled = true,
       opts = {
         -- Window mode
         floating_window = true,     -- Dislay it as floating window.

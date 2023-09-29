@@ -408,7 +408,8 @@ dap.adapters.cppdbg = {
   type = "executable",
   --[[ command = 'C:\\absolute\\path\\to\\cpptools\\extension\\debugAdapters\\bin\\OpenDebugAD7.exe', ]]
   --[[ command = 'D:\\ftarroux\\AppData\\Local\\nvim-data\\mason\\bin\\OpenDebugAD7.cmd', ]]
-  command = "D:\\ftarroux\\AppData\\Local\\nvim-data\\mason\\bin\\OpenDebugAD7.cmd",
+  -- command = "D:\\ftarroux\\AppData\\Local\\nvim-data\\mason\\bin\\OpenDebugAD7.cmd",
+        command = "D:/ftarroux/AppData/Local/nvim-data/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7.exe",
 
   options = {
     detached = false,
@@ -442,7 +443,7 @@ dap.configurations.cpp = {
       "D:\\ftarroux\\Documents\\FRED\\BaseGit\\matisse_fred\\build\\matisse.cfg" },
     cwd = '${workspaceFolder}/build',
     stopAtEntry = true,
-    miDebuggerPath = 'D:/Intel/debugger/latest/gdb/intel64/bin/gdb-oneapi.exe',
+    -- miDebuggerPath = 'D:/Intel/debugger/latest/gdb/intel64/bin/gdb-oneapi.exe',
   },
   {
     name = 'Attach to gdbserver :1234',

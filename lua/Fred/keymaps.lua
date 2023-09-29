@@ -73,11 +73,12 @@ vim.keymap.set("n", "<leader>gg", ":LazyGit<CR>", { noremap = false, silent = fa
 -- -- LSP
 -- vim.keymap.set("n", "<space>,", ":lua vim.lsp.diagnostic.goto_prev()<CR>", { noremap = true, silent = true })
 -- vim.keymap.set("n", "<space>;", ":lua vim.lsp.diagnostic.goto_next()<CR>", { noremap = true, silent = true })
---[[ vim.keymap.set("n", "ga", ":lua vim.lsp.buf.code_action()<CR>", { noremap = true, silent = true }) ]]
+ vim.keymap.set("n", "ga", ":lua vim.lsp.buf.code_action()<CR>", { noremap = true, silent = true })
 --[[ vim.keymap.set("n", "ga", ":CodeActionMenu<CR>", { noremap = true, silent = true }) ]]
 vim.keymap.set("n", "gd", ":lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "gl", ":lua vim.lsp.buf.format({async=true})<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "gh", ":lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "K", ":lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true })
 -- vim.keymap.set("n", "<space>m", ":lua vim.lsp.buf.rename()<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "gr", ":lua vim.lsp.buf.references()<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "gs", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", { noremap = true, silent = true })

@@ -86,15 +86,15 @@ return {
     end,
   },
 
-  {
-    "ray-x/starry.nvim",
-    event = "BufEnter",
-    opts = function()
-      vim.g.starry_style = "marianna"
-      -- require("starry").setup()
-    end,
-    -- keys = { "<F2>" },
-  },
+  -- {
+  --   "ray-x/starry.nvim",
+  --   event = "BufEnter",
+  --   opts = function()
+  --     vim.g.starry_style = "marianna"
+  --     -- require("starry").setup()
+  --   end,
+  --   -- keys = { "<F2>" },
+  -- },
   {
     "simnalamburt/vim-mundo",
     enabled = disableVariable
@@ -253,13 +253,13 @@ return {
   --     })
   --   end,
   -- },
-  {
-    "mcchrish/zenbones.nvim",
-    -- Optionally install Lush. Allows for more configuration or extending the colorscheme
-    -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
-    -- In Vim, compat mode is turned on as Lush only works in Neovim.
-    requires = "rktjmp/lush.nvim",
-  },
+  -- {
+  --   "mcchrish/zenbones.nvim",
+  --   -- Optionally install Lush. Allows for more configuration or extending the colorscheme
+  --   -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
+  --   -- In Vim, compat mode is turned on as Lush only works in Neovim.
+  --   requires = "rktjmp/lush.nvim",
+  -- },
   -- {
   --   "nvim-neotest/neotest",
   --   requires = {
@@ -335,7 +335,10 @@ return {
     end,
   },
   -- { "Darazaki/indent-o-matic" },
-  { "renerocksai/calendar-vim" },
+  -- { "renerocksai/calendar-vim",
+  --   config = function()
+  -- end,
+  -- },
   -- { "joechrisellis/lsp-format-modifications.nvim", dependencies = { "neovim/nvim-lspconfig" } },
   -- { "wellle/context.vim" },
   -- nvim-treesitter-context ne prend pas bien les elseif . attendre de nouveau dev cntext.vim a la place work
@@ -444,7 +447,7 @@ return {
   -- },
   { "shaeinst/roshnivim-cs" },
   { "rafamadriz/neon" },
-  { "tomasiser/vim-code-dark" },
+  -- { "tomasiser/vim-code-dark" },
   { "Mofiqul/vscode.nvim" },
   { "marko-cerovac/material.nvim" },
   { "bluz71/vim-nightfly-colors" },
@@ -453,7 +456,7 @@ return {
   { "sainnhe/sonokai" },
   { "nyoom-engineering/oxocarbon.nvim" },
   { "kyazdani42/blue-moon" },
-  { "mhartington/oceanic-next" },
+  -- { "mhartington/oceanic-next" },
   { "glepnir/zephyr-nvim" },
   { "rockerBOO/boo-colorscheme-nvim" },
   { "jim-at-jibba/ariake-vim-colors" },
@@ -462,20 +465,20 @@ return {
   { "sainnhe/edge" },
   { "theniceboy/nvim-deus" },
   { "bkegley/gloombuddy" },
-  { "Th3Whit3Wolf/one-nvim" },
+  -- { "Th3Whit3Wolf/one-nvim" },
   { "PHSix/nvim-hybrid" },
   -- { "Th3Whit3Wolf/space-nvim" },
   { "yonlu/omni.vim" },
   { "ray-x/aurora" },
   -- { "ray-x/starry.nvim" },
-  { "tanvirtin/monokai.nvim" },
+  -- { "tanvirtin/monokai.nvim" },
   { "ofirgall/ofirkai.nvim" },
   { "savq/melange-nvim" },
-  { "RRethy/nvim-base16" },
+  -- { "RRethy/nvim-base16" },
   { "fenetikm/falcon" },
   { "andersevenrud/nordic.nvim" },
   -- { "shaunsingh/nord.nvim" },
-  { "svrana/neosolarized.nvim" },
+  -- { "svrana/neosolarized.nvim" },
   { "ishan9299/nvim-solarized-lua" },
   { "shaunsingh/moonlight.nvim" },
   { "navarasu/onedark.nvim" },
@@ -497,7 +500,7 @@ return {
   { "FrenzyExists/aquarium-vim" },
   { "EdenEast/nightfox.nvim" },
   { "kvrohit/substrata.nvim" },
-  { "ldelossa/vimdark" },
+  -- { "ldelossa/vimdark" },
   { "Everblush/everblush.nvim" },
   { "adisen99/apprentice.nvim" },
   { "olimorris/onedarkpro.nvim" },
@@ -799,4 +802,21 @@ return {
       "nvim-lua/plenary.nvim",
     },
   },
+ {
+  "roobert/activate.nvim",
+  keys = {
+    {
+      "<leader>zi",
+      '<CMD>lua require("activate").list_plugins()<CR>',
+      desc = "Plugins",
+    },
+  }
+},
+-- {
+--   'Wansmer/symbol-usage.nvim',
+--   event = 'LspAttach', -- need run before LspAttach if you use nvim 0.9. On 0.10 use 'LspAttach'
+--   config = function()
+--     require('symbol-usage').setup()
+--   end
+-- },
 }
