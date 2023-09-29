@@ -20,13 +20,13 @@ The space key shows [all you can do](https://github.com/Zeioth/NormalNvim/wiki/b
 ## Install (Linux/MacOS)
 ```sh
 # Strongly recommended: Fork the repo and clone YOUR fork.
-git clone git@github.com:NormalNVim/NormalNVim.git ~/.config/nvim
+git clone https://github.com/NormalNvim/NormalNvim.git ~/.config/nvim
 ```
 
 ## Install (Windows)
 ```sh
 # Strongly recommended: Fork the repo and clone YOUR fork.
-git clone git@github.com:NormalNVim/NormalNVim.git %USERPROFILE%\AppData\Local\nvim && nvim
+git clone https://github.com/NormalNvim/NormalNvim.git %USERPROFILE%\AppData\Local\nvim && nvim
 ```
 
 ## Dependencies
@@ -42,7 +42,7 @@ NormalNvim will connect to the internet the first time you open it to download t
 * 🔒 **Plugin version lock:** You can choose "stable" or "nightly" update channels. Or if you prefer, use :NvimFreezePluginVersions to create your own stable versions!
 * 🔙 **Rollbacks:** You can easily recover from a nvim distro update using :NvimRollbackRestore
 * 🔥 **Hot reload:** Every time you change something in your config, the changes are reflected on nvim on real time without need to restart.
-* 📱 **Phone friendly:** Good usability even on smalll screens.
+* 📱 **Phone friendly:** You can also install it on Android Termux. Did you ever have a compiler in your pocket? 😉
 * ⌨️ **Alternative mappings:** By default the distro uses qwerty, but colemak-dh can be found [here](https://github.com/Zeioth/NormalNvim/wiki/colemak-dh).
 * ❤️ **We don't treat you like you are stupid:** Code comments guide you to easily customize everything. We will never [hide or abstract](https://i.imgur.com/FCiZvp2.png) stuff from you.
 
@@ -57,13 +57,14 @@ __You are expected to fork the project before cloning it. So you are the only on
 
 |  Command            | Description                             |
 |---------------------|-----------------------------------------|
-| **:healthcheck base**   | Check the system dependencies you are missing. |
-| **:NvimFreezePluginVersions** | Creates `lazy_versions.lua` in your config directory, containing your current plugin versions. If you are using the `stable` updates channel, this file will be used to decide what plugin versions will be installed, and even if you manually try to update your plugins using lazy package manager, the versions file will be respected. If you are using the `nightly` channel, the first time you open nvim, the versions from `lazy_versions.lua` will be installed, but it will be possible to download the last versions by manually updating your plugins with lazy. Note that after running this command, you can manually modify `lazy_versions.lua` in case you only want to freeze some plugins. |
-| **:NvimReload** | Hot reloads the config without leaving nvim. It can cause unexpected issues sometimes. It is automatically triggered when writing the files `1-options.lua` and `4-mappings`. | 
+| **:checkhealth base** | Check the system dependencies you are missing. |
+| **:NvimUpdateConfig** | Pulls the latest changes from the current git repository of your nvim config. Useful to keep your config updated when you use it in more than one machine. If the updates channel is `stable` this command will pull from the latest available tag release in your github repository. Only tag releases starting by 'v', such as v1.0.0 are recognized. It is also possible to define a specific stable version in `2-lazy.lua` by setting the option `stable_vesion_release`. If the channel is `nightly` it will pull from the nightly branch. Note that uncommited local changes in your config will be lost after an update, so it's important you commit before updating your distro config. |
 | **:NvimRollbackCreate** | Creates a recovery point. It is triggered automatically when running `:NvimUpdateConfig`. | 
 | **:NvimRollbackRestore** | Uses git to bring your config to the state it had when `:NvimRollbackCreate` was called. | 
-| **:NvimUpdateConfig** | Pulls the latest changes from the current git repository of your nvim config. Useful to keep your config fresh when you use it in more than one machine. If the updates channel is `stable` this command will pull from the latest available tag release in your github repository. Only tag releases starting by 'v', such as v1.0.0 are recognized. It is also possible to define an specific stable version in `2-lazy.lua` by setting the option `stable_vesion_release`. If the channel is `nightly` it will pull from the nightly branch. Note that uncommited local changes in your config will be lost after an update, so it's important you commit before updating your distro config. |
+| **:NvimReload** | Hot reloads the config without leaving nvim. It can cause unexpected issues sometimes. It is automatically triggered when writing the files `1-options.lua` and `4-mappings`. |
 | **:NvimUpdatePlugins** | Uses lazy to update the plugins. |
+| **:NvimFreezePluginVersions** | Saves your current plugin versions into `lazy_versions.lua` in your config directory. If you are using the `stable` updates channel, this file will be used to decide what plugin versions will be installed, and even if you manually try to update your plugins using lazy package manager, the versions file will be respected. If you are using the `nightly` channel, the first time you open nvim, the versions from `lazy_versions.lua` will be installed, but it will be possible to download the last versions by manually updating your plugins with lazy. Note that after running this command, you can manually modify `lazy_versions.lua` in case you only want to freeze some plugins. |
+| **:CloseNotificaitons** | Close all notifications. This is automatically triggered by default when writting a buffer. |
 | **:NvimVersion** | Prints the commit number of the current NormalNvim version. |
 
 For more info, [read the wiki](https://github.com/Zeioth/NormalNvim/wiki).
@@ -73,12 +74,12 @@ Please before opening an issue, check the [astrocommunity](https://github.com/As
 
 * **NormalNvim is not working. How can I know why?**
 
-    `:healthcheck base`
+    `:checkhealth base`
 
 * **Supports Windows?**
 Yes, 100%. This is not necessary, but we strongly recommend you to launch NormalNvim [using WLS](https://www.youtube.com/watch?v=fFbLUEQsRhM) so you can install [the required dependencies](https://github.com/NormalNvim/NormalNvim/wiki/dependencies) to unlock all features.
 
-* **How can I disable the tabline?** On the options file, search for `showtabline` and set it to 0. If instead you want to remove the functionality completely from nvim, then check the plugin heirline. Here is where we implement the tabline logic. Also check [./lua/base/utils/status.lua](https://github.com/NormalNvim/NormalNvim/blob/main/lua/base/utils/status.lua) if you want to delete heirline helpers functions.
+* **How can I disable the tabline?** On the options file, search for `showtabline` and set it to 0. If instead you want to remove the functionality completely from nvim, then check the plugin heirline. Here is where we implement the tabline logic. Also check [./lua/base/utils/status.lua](https://github.com/NormalNvim/NormalNvim/blob/main/lua/base/utils/status.lua) if you want to delete heirline helper functions.
 
 * **How can I disable the animations?** You can delete the plugin [mini.animate](https://github.com/echasnovski/mini.animate). In case you only want to disable some animations look into the plugin docs.
 

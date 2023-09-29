@@ -12,6 +12,7 @@
 --       -> telescope-fzf-native.nvim   [search backend]
 --       -> smart-splits                [window-dimming]
 --       -> dressing.nvim               [better ui elements]
+--       -> noice.nvim                  [better cmd/search line]
 --       -> nvim-web-devicons           [icons | ui]
 --       -> lspkind.nvim                [icons | lsp]
 --       -> nvim-scrollbar              [scrollbar]
@@ -31,8 +32,12 @@ return {
     "Zeioth/tokyonight.nvim",
     event = "User LoadColorSchemes",
     opts = {
-      dim_inactive = true, -- dim inactive windows
-    },
+      dim_inactive = false,
+      styles = {
+        comments = { italic = true },
+        keywords = { italic = true },
+      },
+    }
   },
 
   --  astrotheme [theme]
@@ -104,14 +109,40 @@ return {
       --   '  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ',
       --   '                                                     ',
       -- }
-      dashboard.section.header.val = {
-        [[                __                ]],
-        [[  ___   __  __ /\_\    ___ ___    ]],
-        [[/' _ `\/\ \/\ \\/\ \ /' __` __`\  ]],
-        [[/\ \/\ \ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
-        [[\ \_\ \_\ \___/  \ \_\ \_\ \_\ \_\]],
-        [[ \/_/\/_/\/__/    \/_/\/_/\/_/\/_/]],
+      -- dashboard.section.header.val = {
+      --   [[                __                ]],
+      --   [[  ___   __  __ /\_\    ___ ___    ]],
+      --   [[/' _ `\/\ \/\ \\/\ \ /' __` __`\  ]],
+      --   [[/\ \/\ \ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
+      --   [[\ \_\ \_\ \___/  \ \_\ \_\ \_\ \_\]],
+      --   [[ \/_/\/_/\/__/    \/_/\/_/\/_/\/_/]],
+      -- }
+
+      if android then dashboard.section.header.val = {
+        [[         __                ]],
+        [[ __  __ /\_\    ___ ___    ]],
+        [[/\ \/\ \\/\ \ /' __` __`\  ]],
+        [[\ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
+        [[ \ \___/  \ \_\ \_\ \_\ \_\]],
+        [[  \/__/    \/_/\/_/\/_/\/_/]],
+       }
+      else dashboard.section.header.val = {
+[[888b      88                                                           88]],
+[[8888b     88                                                           88]],
+[[88 `8b    88                                                           88]],
+[[88  `8b   88   ,adPPYba,   8b,dPPYba,  88,dPYba,,adPYba,   ,adPPYYba,  88]],
+[[88   `8b  88  a8"     "8a  88P'   "Y8  88P'   "88"    "8a  ""     `Y8  88]],
+[[88    `8b 88  8b       d8  88          88      88      88  ,adPPPPP88  88]],
+[[88     `8888  "8a,   ,a8"  88          88      88      88  88,    ,88  88]],
+[[88      `888   `"YbbdP"'   88          88      88      88  `"8bbdP"Y8  88]],
+                 [[                                    __                ]],
+                 [[                      ___   __  __ /\_\    ___ ___    ]],
+                 [[                    /' _ `\/\ \/\ \\/\ \ /' __` __`\  ]],
+                 [[                    /\ \/\ \ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
+                 [[                    \ \_\ \_\ \___/  \ \_\ \_\ \_\ \_\]],
+                 [[                     \/_/\/_/\/__/    \/_/\/_/\/_/\/_/]],
       }
+      end
 
       dashboard.section.header.opts.hl = "DashboardHeader"
       vim.cmd "highlight DashboardHeader guifg=#F7778F"
@@ -142,7 +173,7 @@ return {
       dashboard.config.layout[3].val =
           vim.fn.max { 2, vim.fn.floor(vim.fn.winheight(0) * 0.10) } -- Above buttons
 
-      -- Disablel autocmd and return
+      -- Disable autocmd and return
       dashboard.config.opts.noautocmd = true
       return dashboard
     end,
@@ -212,6 +243,22 @@ return {
       options = { border = "top", try_as_border = true },
       symbol = "▏",
     },
+    config = function(_, opts)
+      require("mini.indentscope").setup(opts)
+
+      -- Disable for certain filetypes
+      vim.api.nvim_create_autocmd({ "User AlphaReady" }, {
+        desc = "Disable indentscope for certain filetypes",
+        callback = function()
+          if vim.bo.filetype == "alpha"
+            or vim.bo.filetype == "mason"
+            or vim.bo.filetype == "notify"
+          then
+            vim.b.miniindentscope_disable = true
+          end
+        end,
+      })
+    end
   },
 
   --  heirline [statusbar]
@@ -281,11 +328,14 @@ return {
             provider = function(self) return string.rep(" ", vim.api.nvim_win_get_width(self.winid) + 1) end,
             hl = { bg = "tabline_bg" },
           },
-          status.heirline.make_buflist(status.component.tabline_file_info()),     -- component for each buffer tab
-          status.component.fill { hl = { bg = "tabline_bg" } },                   -- fill the rest of the tabline with background color
-          {                                                                       -- tab list
-            condition = function() return #vim.api.nvim_list_tabpages() >= 2 end, -- only show tabs if there are more than one
-            status.heirline.make_tablist {                                        -- component for each tab
+          status.heirline.make_buflist(status.component.tabline_file_info()), -- component for each buffer tab
+          status.component.fill { hl = { bg = "tabline_bg" } }, -- fill the rest of the tabline with background color
+          { -- tab list
+            condition = function()
+              -- only show tabs if there are more than one
+              return #vim.api.nvim_list_tabpages() >= 2
+            end,
+            status.heirline.make_tablist { -- component for each tab
               provider = status.provider.tabnr(),
               hl = function(self) return status.hl.get_attributes(status.heirline.tab_type(self, "tab"), true) end,
             },
@@ -441,14 +491,9 @@ return {
       heirline.setup(opts)
 
       -- Autocmds --
-      local autocmd = vim.api.nvim_create_autocmd
-      local augroup = vim.api.nvim_create_augroup
-      local baseevent = utils.event
 
       -- 0. Apply colors defined above to heirline after applying a theme
-      local heirline_group = augroup("Heirline", { clear = true })
-      autocmd("ColorScheme", {
-        group = heirline_group,
+      vim.api.nvim_create_autocmd("ColorScheme", {
         desc = "Refresh heirline colors",
         callback = function()
           require("heirline.utils").on_colorscheme(setup_colors())
@@ -456,10 +501,8 @@ return {
       })
 
       -- 1. Update tabs when adding new buffers
-      local bufferline_group = augroup("bufferline", { clear = true })
-      autocmd({ "BufAdd", "BufEnter", "TabNewEntered" }, {
+      vim.api.nvim_create_autocmd({ "BufAdd", "BufEnter", "TabNewEntered" }, {
         desc = "Update buffers when adding new buffers",
-        group = bufferline_group,
         callback = function(args)
           local buf_utils = require "base.utils.buffer"
           if not vim.t.bufs then vim.t.bufs = {} end
@@ -474,14 +517,13 @@ return {
             vim.t.bufs = bufs
           end
           vim.t.bufs = vim.tbl_filter(buf_utils.is_valid, vim.t.bufs)
-          baseevent "BufsUpdated"
+          utils.event "BufsUpdated"
         end,
       })
 
       -- 2. Update tabs when deleting buffers
-      autocmd("BufDelete", {
+      vim.api.nvim_create_autocmd("BufDelete", {
         desc = "Update buffers when deleting buffers",
-        group = bufferline_group,
         callback = function(args)
           local removed
           for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
@@ -498,7 +540,7 @@ return {
             end
           end
           vim.t.bufs = vim.tbl_filter(require("base.utils.buffer").is_valid, vim.t.bufs)
-          if removed then baseevent "BufsUpdated" end
+          if removed then utils.event "BufsUpdated" end
           vim.cmd.redrawtabline()
         end,
       })
@@ -583,7 +625,7 @@ return {
             entry_format = "󰣜 #$ID, $STAT, $TIME",
             layout_strategy = "horizontal",
             layout_config = {
-              preview_width = 0.70,
+              preview_width = 0.65,
             },
             mappings = {
               i = {
@@ -659,6 +701,48 @@ return {
       input = { default_prompt = "➤ " },
       select = { backend = { "telescope", "builtin" } },
     },
+  },
+
+  --  Noice.nvim [better cmd/search line]
+  --  https://github.com/folke/noice.nvim
+  --  We use it for:
+  --  * cmdline: Display treesitter for :
+  --  * search: Display a magnifier instead of /
+  --
+  --  We don't use it for:
+  --  * LSP status: We use a heirline component for this.
+  --  * Search results: We use a heirline component for this.
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    opts = function()
+      local enable_conceal = false          -- Hide command text if true
+      return {
+        presets = { bottom_search = true }, -- The kind of popup used for /
+        cmdline = {
+          view = "cmdline",                 -- The kind of popup used for :
+          format= {
+            cmdline =     { conceal = enable_conceal },
+            search_down = { conceal = enable_conceal },
+            search_up =   { conceal = enable_conceal },
+            filter =      { conceal = enable_conceal },
+            lua =         { conceal = enable_conceal },
+            help =        { conceal = enable_conceal },
+            input =       { conceal = enable_conceal },
+          }
+        },
+
+        -- Disable every other noice feature
+        messages = { enabled = false },
+        lsp = {
+          hover = { enabled = false },
+          signature = { enabled = false },
+          progress = { enabled = false },
+          message = { enabled = false },
+          smart_move = { enabled = false },
+        },
+      }
+    end
   },
 
   --  UI icons [icons]
@@ -786,7 +870,8 @@ return {
 
   --  highlight-undo
   --  https://github.com/tzachar/highlight-undo.nvim
-  --  BUG: Currently only works for redo.
+  --  This plugin only flases on redo.
+  --  But we also have a autocmd to flash on undo.
   {
     "tzachar/highlight-undo.nvim",
     event = "VeryLazy",
@@ -798,10 +883,19 @@ return {
         { "n", "<C-r>", "redo", {} },
       },
     },
-    config = function(_, opts) require("highlight-undo").setup(opts) end,
+    config = function(_, opts)
+      require("highlight-undo").setup(opts)
+
+      -- Also flash on undo.
+      vim.api.nvim_create_autocmd("TextYankPost", {
+        desc = "Highlight yanked text",
+        pattern = "*",
+        callback = function() vim.highlight.on_yank() end,
+      })
+    end,
   },
 
-  --  [on-screen keybindings]
+  --  which-key.nvim [on-screen keybindings]
   --  https://github.com/folke/which-key.nvim
   {
     "folke/which-key.nvim",
@@ -815,4 +909,6 @@ return {
       require("base.utils").which_key_register()
     end,
   },
+
+
 }

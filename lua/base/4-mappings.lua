@@ -17,6 +17,7 @@
 --       -> buffers/tabs                       [buffers]
 --       -> ui toggles                         [ui]
 --       -> shifted movement keys
+--       -> cmdline autocompletion
 --       -> special cases
 
 --       ## Plugin bindings
@@ -423,7 +424,7 @@ if is_available "zen-mode.nvim" then
   { function() ui.toggle_zen_mode() end, desc = "Zen mode" }
 end
 
--- ui toggles [ui ]---------------------------------------------------------
+-- ui toggles [ui] ---------------------------------------------------------
 maps.n["<leader>u"] = icons.u
 if is_available "nvim-autopairs" then
   maps.n["<leader>ua"] = { ui.toggle_autopairs, desc = "Autopairs" }
@@ -496,10 +497,27 @@ maps.n["<S-PageUp>"] = {
   desc = "Page up exactly 20% of the total size of the buffer",
 }
 
--- special cases -------------------------------------------------
+-- cmdline autocompletion ---------------------------------------------------
+maps.c["<Up>"] = {
+  function() return vim.fn.wildmenumode() == 1 and "<Left>" or "<Up>" end,
+  noremap = true, expr = true, desc = "Wildmenu fix for neovim bug #9953",
+}
+maps.c["<Down>"] = {
+  function() return vim.fn.wildmenumode() == 1 and "<Right>" or "<Down>" end,
+  noremap = true, expr = true, desc = "Wildmenu fix for neovim bug #9953",
+}
+maps.c["<Left>"] = {
+  function() return vim.fn.wildmenumode() == 1 and "<Up>" or "<Left>" end,
+  noremap = true, expr = true, desc = "Wildmenu fix for neovim bug #9953",
+}
+maps.c["<Right>"] = {
+  function() return vim.fn.wildmenumode() == 1 and "<Down>" or "<Right>" end,
+  noremap = true, expr = true, desc = "Wildmenu fix for neovim bug #9953",
+}
+
+-- special cases ------------------------------------------------------------
 vim.api.nvim_create_autocmd("BufWinEnter", {
   desc = "Make q close help, man, quickfix, dap floats",
-  group = vim.api.nvim_create_augroup("q_close_windows", { clear = true }),
   callback = function(args)
     local buftype =
       vim.api.nvim_get_option_value("buftype", { buf = args.buf })
@@ -513,7 +531,6 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
 })
 vim.api.nvim_create_autocmd("CmdwinEnter", {
   desc = "Make q close command history (q: and q?)",
-  group = vim.api.nvim_create_augroup("q_close_windows", { clear = true }),
   callback = function(args)
     vim.keymap.set(
       "n", "q", "<cmd>close<cr>",
@@ -1217,7 +1234,10 @@ if is_available "markdown-preview.nivm" or is_available "markmap.nvim" or is_ava
   -- Markdown Mindmap
   if is_available "markmap.nvim" then
     maps.n["<leader>Dm"] = {
-      function() vim.cmd "MarkmapOpen" end,
+      function()
+        if android then vim.cmd "MarkmapWatch"
+        else vim.cmd "MarkmapOpen"end
+      end,
       desc = "Markmap",
     }
   end

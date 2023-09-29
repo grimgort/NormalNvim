@@ -6,7 +6,6 @@
 --       -> project.nvim           [project search + auto cd]
 --       -> trim.nvim              [auto trim spaces]
 --       -> stickybuf.nvim         [lock special buffers]
---       -> telescope-undo.nvim    [undo history]
 --       -> nvim-window-picker     [select buffer with a letter]
 --       -> smart-splits           [move and resize buffers]
 --       -> better-scape.nvim      [esc]
@@ -116,7 +115,8 @@ return {
   -- By default it support neovim/aerial and others.
   {
     "stevearc/stickybuf.nvim",
-    opts = {},
+    event = "VeryLazy",
+    config = function() require("stickybuf").setup() end
   },
 
   -- nvim-window-picker  [select buffer with a letter]
@@ -203,12 +203,13 @@ return {
       session_manager.setup(opts)
 
       -- Auto save session
-      vim.api.nvim_create_autocmd({ 'VimLeavePre' }, {
-        group = vim.api.nvim_create_augroup(
-          "session_manager_save_session", { clear = true }),
+      vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
         callback = function ()
-          -- BUG: Don't change the autocmd event until this neovim bug is fixed
-          -- https://github.com/neovim/neovim/issues/12242
+          -- BUG: Before saving your session we close anything non-buffer:
+          --      neotree, mergetool, aerial...
+          --
+          --      This is currently necessary due to this neovim bug.
+          --      https://github.com/neovim/neovim/issues/12242
           session_manager.save_current_session()
         end
       })
@@ -223,7 +224,6 @@ return {
   -- It doesn't have ctrl-z so please always commit before using it.
   {
     "nvim-pack/nvim-spectre",
-    build = (windows and "") or "./build.sh nvim-oxi",
     cmd = "Spectre",
     opts = {
       default = {
@@ -234,7 +234,7 @@ return {
         },
         replace = {
           -- pick one of item in [ sed, oxi ]
-          cmd = (windows and "sed") or "oxi",
+          cmd = "sed"
         },
       },
       is_insert_mode = true, -- start open panel on is_insert_mode
@@ -592,8 +592,8 @@ return {
   --  hop.nvim [go to word visually]
   --  https://github.com/phaazon/hop.nvim
   {
-    "phaazon/hop.nvim",
-    cmd = { "HopWord","HopChar1" },
+    "smoka7/hop.nvim",
+    cmd = { "HopWord" },
     opts = { keys = "etovxqpdygfblzhckisuran" },
     config = function(_, opts)
       -- you can configure Hop the way you like here; see :h hop-config
