@@ -36,20 +36,20 @@ local is_available = utils.is_available
 autocmd({ "BufReadPost", "BufNewFile", "BufWritePost" }, {
   desc = "Nvim user events for file detection (BaseFile and BaseGitFile)",
   callback = function(args)
-    local empty_buffer = vim.fn.resolve(vim.fn.expand "%") == ""
-    local greeter = vim.api.nvim_get_option_value("filetype", { buf = args.buf }) == "alpha"
-    local git_repo = utils.cmd({ "git", "-C", vim.fn.fnamemodify(vim.fn.resolve(vim.fn.expand "%"), ":p:h"), "rev-parse" }, false)
-
-    -- For any file exept empty buffer, or the greeter (alpha)
-    if not (empty_buffer or greeter) then
-      utils.event "File" -- Emit event 'BaseFile'
-
-      -- Is the buffer part of a git repo?
-      if git_repo then
-        utils.event "GitFile" -- Emit event 'BaseGitFile'
-      end
-
-    end
+    -- local empty_buffer = vim.fn.resolve(vim.fn.expand "%") == ""
+    -- local greeter = vim.api.nvim_get_option_value("filetype", { buf = args.buf }) == "alpha"
+    -- local git_repo = utils.cmd({ "git", "-C", vim.fn.fnamemodify(vim.fn.resolve(vim.fn.expand "%"), ":p:h"), "rev-parse" }, false)
+    --
+    -- -- For any file exept empty buffer, or the greeter (alpha)
+    -- if not (empty_buffer or greeter) then
+    --   utils.event "File" -- Emit event 'BaseFile'
+    --
+    --   -- Is the buffer part of a git repo?
+    --   if git_repo then
+    --     utils.event "GitFile" -- Emit event 'BaseGitFile'
+    --   end
+    --
+    -- end
   end,
 })
 
@@ -57,30 +57,30 @@ autocmd({ "BufReadPost", "BufNewFile", "BufWritePost" }, {
 autocmd({ "BufWinLeave", "BufWritePost", "WinLeave" }, {
   desc = "Save view with mkview for real files",
   callback = function(args)
-    if vim.b[args.buf].view_activated then
-      vim.cmd.mkview { mods = { emsg_silent = true } }
-    end
+    -- if vim.b[args.buf].view_activated then
+    --   vim.cmd.mkview { mods = { emsg_silent = true } }
+    -- end
   end,
 })
 autocmd("BufWinEnter", {
   desc = "Try to load file view if available and enable view saving for real files",
   callback = function(args)
-    if not vim.b[args.buf].view_activated then
-      local filetype =
-        vim.api.nvim_get_option_value("filetype", { buf = args.buf })
-      local buftype =
-        vim.api.nvim_get_option_value("buftype", { buf = args.buf })
-      local ignore_filetypes = { "gitcommit", "gitrebase", "svg", "hgcommit" }
-      if
-        buftype == ""
-        and filetype
-        and filetype ~= ""
-        and not vim.tbl_contains(ignore_filetypes, filetype)
-      then
-        vim.b[args.buf].view_activated = true
-        vim.cmd.loadview { mods = { emsg_silent = true } }
-      end
-    end
+    -- if not vim.b[args.buf].view_activated then
+    --   local filetype =
+    --     vim.api.nvim_get_option_value("filetype", { buf = args.buf })
+    --   local buftype =
+    --     vim.api.nvim_get_option_value("buftype", { buf = args.buf })
+    --   local ignore_filetypes = { "gitcommit", "gitrebase", "svg", "hgcommit" }
+    --   if
+    --     buftype == ""
+    --     and filetype
+    --     and filetype ~= ""
+    --     and not vim.tbl_contains(ignore_filetypes, filetype)
+    --   then
+    --     vim.b[args.buf].view_activated = true
+    --     vim.cmd.loadview { mods = { emsg_silent = true } }
+    --   end
+    -- end
   end,
 })
 

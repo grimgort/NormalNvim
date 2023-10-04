@@ -238,6 +238,8 @@ return {
         },
       },
       is_insert_mode = true, -- start open panel on is_insert_mode
+is_block_ui_break = true,
+ live_update = false,
       mapping = {
         ["toggle_line"] = {
           map = "d",
