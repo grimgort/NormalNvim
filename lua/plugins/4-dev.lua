@@ -773,13 +773,9 @@ dap.configurations.rust = dap.configurations.cpp
   --  -- Unit testing:
   --  To tun an unit test you can run any of these commands:
   --
-  --    :TestRunBlock   -- Runs the nearest test to the cursor.
-  --    :TestStopBlock  -- Stop the nearest test to the cursor.
-  --    :TestRunFile    -- Run all tests in the file.
-  --    :TestDebugBlock -- Debug the nearest test under the cursor using dap
-  --
-  --  All this commands are meant to be executed in a test file.
-  --  You can find them on ../base/3-autocmds.lua
+  --    :Neotest run      -- Runs the nearest test to the cursor.
+  --    :Neotest stop     -- Stop the nearest test to the cursor.
+  --    :Neotest run file -- Run all tests in the file.
   --
   --  -- E2e and Test Suite
   --  Normally you will prefer to open your e2e framework GUI outside of nvim.
@@ -789,12 +785,7 @@ dap.configurations.rust = dap.configurations.cpp
   --    :TestNodejsE2e -- Run the e2e tests/suite for this nodejs project.
   {
     "nvim-neotest/neotest",
-    cmd = {             -- All commands are meant to run in a test file
-      "TestRunBlock",   -- Run the nearest test to the cursor.
-      "TestStopBlock",  -- Stop the test to the cursor.
-      "TestDebugBlock", -- Debug the nearest test under the cursor using dap.
-      "TestRunFile",    -- Run all tests in the file.
-    },
+    cmd = { "Neotest" },
     dependencies = {
       "nvim-neotest/neotest-go",
       "nvim-neotest/neotest-python",

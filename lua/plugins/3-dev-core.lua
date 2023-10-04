@@ -10,6 +10,7 @@
 
 --       ## LSP
 --       -> nvim-lspconfig                 [lsp config]
+--       -> lsp-timeout                    [lsp garbage collector]
 --       -> mason.nvim                     [lsp package manager]
 --       -> SchemaStore.nvim               [lsp schema manager]
 --       -> null-ls                        [lsp code formatting]
@@ -270,7 +271,23 @@ return {
     },
   },
 
-  --  Syntax highlight [lsp package manager]
+  --  lsp-timeout [lsp garbage collector]
+  --  https://github.com/hinell/lsp-timeout.nvim
+  --  Stop inactive lsp servers until the buffer recover the focus.
+  {
+    "hinell/lsp-timeout.nvim",
+    dependencies={ "neovim/nvim-lspconfig" },
+    event = "User BaseFile",
+    init = function()
+      vim.g["lsp-timeout-config"] = {
+        stopTimeout = 1000*60*10, -- Stop unused lsp servers after 10 min.
+        startTimeout = 2000, -- Force server restart if nvim can't in 2s.
+        silent = true -- Notifications disabled
+      }
+    end
+  },
+
+  --  mason [lsp package manager]
   --  https://github.com/williamboman/mason.nvim
   {
     "williamboman/mason.nvim",
@@ -328,10 +345,10 @@ return {
   --  https://github.com/b0o/SchemaStore.nvim
   "b0o/SchemaStore.nvim",
 
-  --  null ls [lsp code formatting]
-  --  https://github.com/jose-elias-alvarez/null-ls.nvim
+  --  null-ls [lsp code formatting]
+  --  https://github.com/nvimtools/none-ls.nvim
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     dependencies = {
       {
         "jay-babu/mason-null-ls.nvim",
@@ -344,12 +361,10 @@ return {
       local nls = require "null-ls"
       return {
         sources = {
+          -- You can customize your formatters here.
           nls.builtins.formatting.beautysh.with {
             command = "beautysh",
-            args = {
-              "--indent-size=2",
-              "$FILENAME",
-            },
+            args = { "--indent-size=2", "$FILENAME" },
           },
         },
         on_attach = require("base.utils.lsp").on_attach,
@@ -538,4 +553,7 @@ return {
       }
     end,
   },
+
+
+
 } -- end of return

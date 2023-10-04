@@ -1166,6 +1166,14 @@ if is_available "neotest" then
     function() require("neotest").run.run { strategy = "dap" } end,
     desc = "Unit in debugger",
   }
+  maps.n["<leader>Tt"] = {
+    function() require("neotest").summary.toggle() end,
+    desc = "neotest summary",
+  }
+  maps.n["<leader>TT"] = {
+    function() require("neotest").output_panel.toggle() end,
+    desc = "output panel",
+  }
 end
 
 -- Extra - nvim-coverage
@@ -1216,6 +1224,16 @@ if is_available "nvim-ufo" then
     function() require("ufo").peekFoldedLinesUnderCursor() end,
     desc = "Peek fold",
   }
+  maps.n["zz"] = { function()
+    local ufo = require("ufo")
+    if vim.b.comments_folded then
+      ufo.openAllFolds()
+      vim.b.comments_folded = false
+    else
+      ufo.openFoldsExceptKinds({'comment'}) -- Also allow region|imports
+      vim.b.comments_folded = true
+    end
+  end, desc = "Toggle comments" }
 end
 
 -- code docmentation [docs] -------------------------------------------------
