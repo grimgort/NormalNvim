@@ -443,9 +443,7 @@ maps.n["<leader>ug"] = { ui.toggle_signcolumn, desc = "Signcolumn" }
 maps.n["<leader>ul"] = { ui.toggle_statusline, desc = "Statusline" }
 maps.n["<leader>uL"] = { ui.toggle_codelens, desc = "CodeLens" }
 maps.n["<leader>un"] = { ui.change_number, desc = "Change line numbering" }
-maps.n["<leader>uN"] =
-{ ui.toggle_ui_notifications, desc = "UI notifications" }
-maps.n["<leader>up"] = { ui.toggle_paste, desc = "Paste mode" }
+maps.n["<leader>uP"] = { ui.toggle_paste, desc = "Paste mode" }
 maps.n["<leader>us"] = { ui.toggle_spell, desc = "Spellcheck" }
 maps.n["<leader>uS"] = { ui.toggle_conceal, desc = "Conceal" }
 maps.n["<leader>ut"] = { ui.toggle_tabline, desc = "Tabline" }
@@ -453,16 +451,14 @@ maps.n["<leader>uu"] = { ui.toggle_url_effect, desc = "URL highlight" }
 maps.n["<leader>uw"] = { ui.toggle_wrap, desc = "Wrap" }
 maps.n["<leader>uy"] = { ui.toggle_buffer_syntax, desc = "Syntax highlight (buffer)" }
 maps.n["<leader>uh"] = { ui.toggle_foldcolumn, desc = "Foldcolumn" }
-maps.n["<leader>uA"] = {
-  function()
-    if vim.g.minianimate_disable then
-      vim.g.minianimate_disable = false
-    else
-      vim.g.minianimate_disable = true
-    end
-  end,
-  desc = "Animations",
-}
+maps.n["<leader>uN"] =
+{ ui.toggle_ui_notifications, desc = "UI notifications" }
+if is_available "lsp_signature.nvim" then
+  maps.n["<leader>up"] = { ui.toggle_lsp_signature, desc = "LSP signature" }
+end
+if is_available "mini.animate" then
+  maps.n["<leader>uA"] = { ui.toggle_animations, desc = "Animations" }
+end
 
 maps.n["K"] = {"<PageDown>"}
 maps.n["J"] = {"<PageUp>"}
@@ -1224,16 +1220,12 @@ if is_available "nvim-ufo" then
     function() require("ufo").peekFoldedLinesUnderCursor() end,
     desc = "Peek fold",
   }
-  maps.n["zz"] = { function()
-    local ufo = require("ufo")
-    if vim.b.comments_folded then
-      ufo.openAllFolds()
-      vim.b.comments_folded = false
-    else
-      ufo.openFoldsExceptKinds({'comment'}) -- Also allow region|imports
-      vim.b.comments_folded = true
-    end
-  end, desc = "Toggle comments" }
+  maps.n["zn"] =
+    { function() require("ufo").openFoldsExceptKinds({'comment'}) end,
+    desc = "Fold comments" }
+  maps.n["zN"] =
+    { function() require("ufo").openFoldsExceptKinds({'region'}) end,
+    desc = "Fold region" }
 end
 
 -- code docmentation [docs] -------------------------------------------------

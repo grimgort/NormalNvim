@@ -1,9 +1,6 @@
 -- Disabled plugins
 -- In case we want to re-enable them in the future.
 
---    Sections:
---       -> lsp_signature.nvim
-
 return {
 
     -- Show help when writing parameters [auto params help]

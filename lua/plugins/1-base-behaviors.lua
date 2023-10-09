@@ -221,13 +221,13 @@ return {
   -- To start the search press <ESC>.
   -- It doesn't have ctrl-z so please always commit before using it.
   {
-    "nvim-pack/nvim-spectre",
+    "zeioth/nvim-spectre",
     cmd = "Spectre",
     opts = {
       default = {
         find = {
-          -- pick one of item in find_engine [ ag, rg, ripgrep ]
-          cmd = "rg",
+          -- pick one of item in find_engine [ fd, rg ]
+          cmd = "fd",
           options = {}
         },
         replace = {
@@ -636,4 +636,32 @@ is_block_ui_break = true,
       end
     end
   },
+
+  -- Show help when writing parameters [auto params help]
+  -- https://github.com/ray-x/lsp_signature.nvim
+  {
+    "Zeioth/lsp_signature.nvim",
+    event = "User BaseFile",
+    opts = function()
+      -- Apply globals from 1-options.lua
+      local is_enabled = vim.g.lsp_signature_enabled
+      local round_borders = {}
+      if vim.g.lsp_round_borders_enabled then
+        round_borders = { border = 'rounded' }
+      end
+      return {
+        -- Window mode
+        floating_window = is_enabled, -- Dislay it as floating window.
+        hi_parameter = "IncSearch",   -- Color to highlight floating window.
+        handler_opts = round_borders, -- Window style
+
+        -- Hint mode
+        hint_enable = false,          -- Display it as hint.
+        hint_prefix = "👈 "
+
+        -- Aditionally, you can use <space>ui to toggle inlay hints.
+      } end,
+    config = function(_, opts) require'lsp_signature'.setup(opts) end
+  },
+
 }
