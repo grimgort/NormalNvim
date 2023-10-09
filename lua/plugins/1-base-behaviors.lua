@@ -172,7 +172,7 @@ return {
         WinBarNC = { link = "WinBarNC" },
       },
       size = 10,
-      open_mapping = [[<F7>]],
+      -- open_mapping = [[<F7>]],
       shading_factor = 2,
       direction = "float",
       float_opts = {
