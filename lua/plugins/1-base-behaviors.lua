@@ -20,6 +20,7 @@
 --       -> vim-matchup            [Improved % motion]
 --       -> hop.nvim               [go to word visually]
 --       -> nvim-autopairs         [auto close brackets]
+--       -> lsp_signature.nvim     [auto params help]
 
 local windows = vim.fn.has('win32') == 1             -- true if on windows
 local android = vim.fn.isdirectory('/system') == 1   -- true if on android
@@ -203,11 +204,11 @@ return {
       -- Auto save session
       vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
         callback = function ()
-          -- BUG: Before saving your session we close anything non-buffer:
-          --      neotree, mergetool, aerial...
-          --
-          --      This is currently necessary due to this neovim bug.
-          --      https://github.com/neovim/neovim/issues/12242
+          -- Don't save while there's any 'nofile' open.
+          for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+            local buftype = vim.api.nvim_get_option_value("buftype", { buf = buf })
+            if buftype == 'nofile' then return end
+          end
           session_manager.save_current_session()
         end
       })
@@ -596,7 +597,6 @@ is_block_ui_break = true,
     cmd = { "HopWord" },
     opts = { keys = "etovxqpdygfblzhckisuran" },
     config = function(_, opts)
-      -- you can configure Hop the way you like here; see :h hop-config
       require("hop").setup(opts)
     end,
   },
@@ -637,10 +637,10 @@ is_block_ui_break = true,
     end
   },
 
-  -- Show help when writing parameters [auto params help]
+  -- lsp_signature.nvim [auto params help]
   -- https://github.com/ray-x/lsp_signature.nvim
   {
-    "Zeioth/lsp_signature.nvim",
+    "ray-x/lsp_signature.nvim",
     event = "User BaseFile",
     opts = function()
       -- Apply globals from 1-options.lua

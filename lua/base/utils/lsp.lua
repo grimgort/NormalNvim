@@ -141,7 +141,7 @@ M.on_attach = function(client, bufnr)
     lsp_mappings.n["<leader>li"] = { "<cmd>LspInfo<cr>", desc = "LSP information" }
   end
 
-  if is_available "null-ls.nvim" then
+  if is_available "none-ls.nvim" then
     lsp_mappings.n["<leader>lI"] = { "<cmd>NullLsInfo<cr>", desc = "Null-ls information" }
   end
 
@@ -444,17 +444,10 @@ function M.config(server_name)
   end
   if server_name == "lua_ls" then -- by default initialize neodev and disable third party checking
     pcall(require, "neodev")
-    lsp_opts.before_init = function(param, config)
-      if vim.b.neodev_enabled then
-        for _, base_config in ipairs(base.supported_configs) do
-          if param.rootPath:match(base_config) then
-            table.insert(config.settings.Lua.workspace.library, base.install.home .. "/lua")
-            break
-          end
-        end
-      end
-    end
     lsp_opts.settings = { Lua = { workspace = { checkThirdParty = false } } }
+  end
+  if server_name == "bashls" then -- by default use mason shellcheck path
+    lsp_opts.settings = { bashIde = { shellcheckPath = vim.fn.stdpath "data" .. "/mason/bin/shellcheck" } }
   end
   local opts = lsp_opts
   local old_on_attach = server.on_attach

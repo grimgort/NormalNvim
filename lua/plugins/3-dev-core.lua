@@ -365,27 +365,37 @@ return {
             command = "beautysh",
             args = { "--indent-size=2", "$FILENAME" },
           },
+          -- TODO: Disable the next feature once this has been merged.
+          -- https://github.com/bash-lsp/bash-language-server/issues/933
+          nls.builtins.code_actions.shellcheck,
+          nls.builtins.diagnostics.shellcheck.with { diagnostics_format = "" },
         },
         on_attach = require("base.utils.lsp").on_attach,
       }
     end,
+    config = function(_, opts)
+      local nls = require "null-ls"
+      nls.setup(opts)
+
+      -- Ensure null-ls start its sources a lsp client starts.
+      vim.api.nvim_create_autocmd({ "LspAttach" }, {
+        desc = "Ensure null-ls start its sources a lsp client starts",
+        callback = function()
+          pcall(function() require("null-ls").enable({}) end)
+        end,
+      })
+
+    end
   },
 
   --  neodev.nvim [lsp for nvim lua api]
   --  https://github.com/folke/neodev.nvim
   {
     "folke/neodev.nvim",
-    opts = {
-      override = function(root_dir, library)
-        for _, base_config in ipairs(base.supported_configs) do
-          if root_dir:match(base_config) then
-            library.plugins = true
-            break
-          end
-        end
-        vim.b.neodev_enabled = library.enabled
-      end,
-    },
+    opts = {},
+    config = function(_, opts)
+      require("neodev").setup(opts)
+    end,
   },
 
   --  AUTO COMPLETION --------------------------------------------------------
