@@ -325,6 +325,7 @@ return {
       vim.api.nvim_set_var("translator_target_lang", "fr")
       vim.api.nvim_set_var("translator_source_lang", "en")
       vim.api.nvim_set_var("translator_proxy_url", "http://proxy.onera:80")
+      -- vim.api.nvim_set_var("translator_default_engines", "[google]")
     end,
   },
   { "p00f/clangd_extensions.nvim" },
@@ -812,6 +813,29 @@ return {
     },
   }
 },
+--   {
+-- "uga-rosa/translate.nvim",
+-- config = function ()
+--   require("translate").setup({
+--     default = {
+--         -- command = "deepl_pro",
+--     },
+--
+--     preset = {
+--         command = {
+--       google = {
+--         args = {"http://proxy.onera:80"},
+--       },
+--         },
+--         output = {
+--             split = {
+--                 append = true,
+--             },
+--         },
+--     },
+-- })
+-- end
+--   },
 -- {
 --   'Wansmer/symbol-usage.nvim',
 --   event = 'LspAttach', -- need run before LspAttach if you use nvim 0.9. On 0.10 use 'LspAttach'
