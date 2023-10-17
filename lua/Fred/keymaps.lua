@@ -17,23 +17,11 @@
 -- vim.g.mapleader = "<space>"
 -- vim.keymap.set("n", "<F4>", ":set number! relativenumber!<CR>", { noremap = true, silent = false })
 -- vim.keymap.set("n", "<F5>", ":set list! list?<CR>", { noremap = false, silent = false })
-vim.keymap.set("n", "ç", '<CMD>lua require("FTerm").toggle()<CR>', { noremap = true, silent = true })
-vim.keymap.set("t", "ç", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', { noremap = true, silent = true })
+-- vim.keymap.set("n", "ç", '<CMD>lua require("FTerm").toggle()<CR>', { noremap = true, silent = true })
+-- vim.keymap.set("t", "ç", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', { noremap = true, silent = true })
 
---[[ local fterm = require("FTerm") ]]
---[[]]
---[[ local lazygit = fterm:new({ ]]
---[[     ft = 'fterm_lazygit', ]]
---[[     cmd = "lazygit" ]]
---[[ }) ]]
---[[]]
---[[  -- Use this to toggle lazygit in a floating terminal ]]
---[[ vim.keymap.set('n', '<leader>gh', function() ]]
---[[     lazygit:toggle() ]]
---[[ end) ]]
---[[]]
---[[ vim.keymap.set("n", "ç", '<CMD>ToggleTerm<CR>', { noremap = true, silent = true }) ]]
---[[ vim.keymap.set("t", "ç", '<C-\\><C-n><CMD>ToggleTerm<CR>', { noremap = true, silent = true }) ]]
+ vim.keymap.set("n", "ç", '<CMD>ToggleTerm<CR>', { noremap = true, silent = true }) 
+ vim.keymap.set("t", "ç", '<C-\\><C-n><CMD>ToggleTerm<CR>', { noremap = true, silent = true }) 
 --vim.cmd([[
 --nnoremap <silent>ç <Cmd>exe v:count1 . "ToggleTerm"<CR>
 --tnoremap <silent>ç <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
@@ -630,3 +618,4 @@ vim.keymap.set("n", "gpr", "<cmd>lua require('goto-preview').goto_preview_refere
 
 
 vim.api.nvim_set_keymap("n","<leader>bf","<cmd>Neotree buffers<cr>", { silent = true })
+vim.api.nvim_set_keymap("n","<leader>gn","<cmd>Neotree git_status<cr>", { silent = true })
