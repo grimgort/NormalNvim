@@ -687,6 +687,20 @@ dap.configurations.rust = dap.configurations.cpp
       -- dap.configurations.typescriptreact = dap.configurations.typescript
       -- dap.configurations.javascriptreact = dap.configurations.typescript
 
+      -- PHP
+      dap.adapters.php = {
+        type = 'executable',
+        command = vim.fn.stdpath("data") .. '/mason/bin/php-debug-adapter',
+      }
+      dap.configurations.php = {
+        {
+          type = 'php',
+          request = 'launch',
+          name = 'Listen for Xdebug',
+          port = 9000
+        }
+      }
+
       -- Shell
       dap.adapters.bashdb = {
         type = 'executable';
@@ -806,21 +820,31 @@ dap.configurations.rust = dap.configurations.cpp
     "nvim-neotest/neotest",
     cmd = { "Neotest" },
     dependencies = {
-      "nvim-neotest/neotest-go",
-      "nvim-neotest/neotest-python",
-      "nvim-neotest/neotest-jest",
+      "sidlatau/neotest-dart",
       "Issafalcon/neotest-dotnet",
+      "jfpedroza/neotest-elixir",
+      "nvim-neotest/neotest-go",
+      "rcasia/neotest-java",
+      "nvim-neotest/neotest-jest",
+      "olimorris/neotest-phpunit",
+      "nvim-neotest/neotest-python",
       "rouge8/neotest-rust",
+      "lawrence-laz/neotest-zig",
     },
     opts = function()
       return {
         -- your neotest config here
         adapters = {
-          require "neotest-go",
-          require "neotest-python",
-          require "neotest-jest",
+          require "neotest-dart",
           require "neotest-dotnet",
+          require "neotest-elixir",
+          require "neotest-go",
+          require "neotest-java",
+          require "neotest-jest",
+          require "neotest-phpunit",
+          require "neotest-python",
           require "neotest-rust",
+          require "neotest-zig",
         },
       }
     end,
@@ -887,7 +911,6 @@ dap.configurations.rust = dap.configurations.cpp
         end,
       })
     end,
-  }
-
+  },
 
 }

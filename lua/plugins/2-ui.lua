@@ -301,8 +301,8 @@ return {
           status.component.cmd_info(),
           status.component.fill(),
           status.component.lsp(),
-          --status.component.treesitter(),    -- uncomment to enable
           status.component.compiler_state(),
+          status.component.virtual_env(),
           --status.component.file_encoding(), -- uncomment to enable
           status.component.nav(),
           status.component.mode { surround = { separator = "right" } },
@@ -394,6 +394,8 @@ return {
         local String = get_hlgroup("String", { fg = C.green, bg = C.dark_bg })
         local TypeDef =
             get_hlgroup("TypeDef", { fg = C.yellow, bg = C.dark_bg })
+        local NvimEnvironmentName =
+            get_hlgroup("NvimEnvironmentName", { fg = C.yellow, bg = C.dark_bg })
         local GitSignsAdd =
             get_hlgroup("GitSignsAdd", { fg = C.green, bg = C.dark_bg })
         local GitSignsChange =
@@ -434,6 +436,7 @@ return {
           git_branch_fg = Conditional.fg,
           mode_fg = StatusLine.bg,
           treesitter_fg = String.fg,
+          virtual_env_fg = NvimEnvironmentName.fg,
           scrollbar = TypeDef.fg,
           git_added = GitSignsAdd.fg,
           git_changed = GitSignsChange.fg,
@@ -489,6 +492,7 @@ return {
           "cmd_info",
           "treesitter",
           "nav",
+          "virtual_env",
         } do
           if not colors[section .. "_bg"] then
             colors[section .. "_bg"] = colors["section_bg"]
