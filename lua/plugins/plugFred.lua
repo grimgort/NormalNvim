@@ -843,4 +843,14 @@ return {
 --     require('symbol-usage').setup()
 --   end
 -- },
+  -- {"marxin/neo-rtags",
+  --  config = function()
+  --     -- require("neo-rtags").setup()
+  --   end,
+  -- },
+    {
+        "sontungexpt/stcursorword",
+        event = "VeryLazy",
+        config = true,
+    },
 }

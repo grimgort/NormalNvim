@@ -1,3 +1,5 @@
+vim.cmd('autocmd BufNewFile,BufRead *.inl set filetype=cpp')
+vim.cmd('autocmd BufNewFile,BufRead *.sycl set filetype=cpp')
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
@@ -20,8 +22,8 @@
 -- vim.keymap.set("n", "ç", '<CMD>lua require("FTerm").toggle()<CR>', { noremap = true, silent = true })
 -- vim.keymap.set("t", "ç", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', { noremap = true, silent = true })
 
- vim.keymap.set("n", "ç", '<CMD>ToggleTerm<CR>', { noremap = true, silent = true }) 
- vim.keymap.set("t", "ç", '<C-\\><C-n><CMD>ToggleTerm<CR>', { noremap = true, silent = true }) 
+ vim.keymap.set("n", "ç", '<CMD>ToggleTerm<CR>', { noremap = true, silent = true })
+ vim.keymap.set("t", "ç", '<C-\\><C-n><CMD>ToggleTerm<CR>', { noremap = true, silent = true })
 --vim.cmd([[
 --nnoremap <silent>ç <Cmd>exe v:count1 . "ToggleTerm"<CR>
 --tnoremap <silent>ç <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
@@ -341,7 +343,7 @@ vim.keymap.set("n", "k", "gk", opt)
 -- vim.keymap.set("n", "<leader>gc", "<cmd>Telescope git_commits<cr>", opt)
 -- vim.keymap.set("n", "<leader>gC", "<cmd>Telescope git_bcommits<cr>", opt)
 -- vim.keymap.set("n", "<leader>gd", "<cmd>Gitsigns diffthis<cr>", opt)
--- vim.keymap.set("n", "<leader>gf", "<cmd>Neogit<cr>", opt)
+vim.keymap.set("n", "<leader>gf", "<cmd>Neogit<cr>", opt)
 
 -- vim.keymap.set("n", "<leader>hj", "<cmd>lua vim.diagnostic.goto_next()<cr>", opt)
 -- vim.keymap.set("n", "<leader>hk", "<cmd>lua vim.diagnostic.goto_prev()<cr>", opt)
