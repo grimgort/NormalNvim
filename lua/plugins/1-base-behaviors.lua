@@ -38,6 +38,7 @@ return {
   --   This way you can install and use 'ranger' and its dependency 'pynvim'.
   {
     "kevinhwang91/rnvimr",
+    event = "VeryLazy",
     cmd = { "RnvimrToggle" },
     enabled = not windows,
     config = function(_, opts)
@@ -320,7 +321,7 @@ is_block_ui_break = true,
     },
   },
 
-  -- neotree
+  -- [neotree]
   -- https://github.com/nvim-neo-tree/neo-tree.nvim
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -582,7 +583,7 @@ is_block_ui_break = true,
   },
 
   --  hop.nvim [go to word visually]
-  --  https://github.com/phaazon/hop.nvim
+  --  https://github.com/smoka7/hop.nvim
   {
     "smoka7/hop.nvim",
     cmd = { "HopWord" },

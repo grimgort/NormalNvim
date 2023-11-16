@@ -13,7 +13,7 @@
 --       -> garbage-day                    [lsp garbage collector]
 --       -> mason.nvim                     [lsp package manager]
 --       -> SchemaStore.nvim               [lsp schema manager]
---       -> null-ls                        [lsp code formatting]
+--       -> none-ls                        [lsp code formatting]
 --       -> neodev                         [lsp for nvim lua api]
 
 --       ## AUTO COMPLETON
@@ -270,20 +270,21 @@ return {
     },
   },
 
-  --  garbage-day.nvim
+  --  garbage-day.nvim [lsp garbage collector]
   --  https://github.com/zeioth/garbage-day.nvim
-  --  LSP garbage collector.
   {
     "zeioth/garbage-day.nvim",
     event = "User BaseFile",
     opts = {
-      aggressive_mode = true,
+      aggressive_mode = false,
       excluded_lsp_clients = {
-        "jdtls"
+        "null-ls", "jdtls"
       },
-      grace_period = (60*15),
+      grace_period = (60*5),
+      wakeup_delay = 3000,
       notifications = false,
-      retries = 4,
+      retries = 5,
+      timeout = 200,
     }
   },
 

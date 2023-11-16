@@ -885,8 +885,8 @@ dap.configurations.rust = dap.configurations.cpp
       "CoverageClear",
       "CoverageSummary",
     },
+    dependencies = { "nvim-lua/plenary.nvim" },
     config = function() require("coverage").setup() end,
-    requires = { "nvim-lua/plenary.nvim" },
   },
 
   --  LANGUAGE IMPROVEMENTS ---------------------------------------------------
@@ -895,7 +895,7 @@ dap.configurations.rust = dap.configurations.cpp
   -- This plugin is necessary for using <C-]> (go to ctag).
   {
     "skywind3000/gutentags_plus",
-    event = "VeryLazy",
+    ft = { "c", "cpp" },
     dependencies = { "ludovicchabant/vim-gutentags" },
     init = function()
       vim.g.gutentags_plus_nomap = 1
