@@ -11,7 +11,7 @@
 _G.base = {}
 
 -- Theme
-base.default_colorscheme = "astrotheme"
+base.default_colorscheme = "nord"
 -- base.default_colorscheme = "gruvbox"
 
 -- define variables -----------------------------------------------------------

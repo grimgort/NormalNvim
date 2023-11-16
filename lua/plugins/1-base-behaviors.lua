@@ -490,7 +490,7 @@ is_block_ui_break = true,
             enabled = false,
           },
           hijack_netrw_behavior = "open_current",
-          use_libuv_file_watcher = true,
+          use_libuv_file_watcher = false,
         },
         event_handlers = {
           {
