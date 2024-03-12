@@ -159,6 +159,7 @@ return {
   -- https://github.com/akinsho/toggleterm.nvim
   -- neovim bug → https://github.com/neovim/neovim/issues/21106
   -- workarounds → https://github.com/akinsho/toggleterm.nvim/wiki/Mouse-support
+
   {
     "akinsho/toggleterm.nvim",
     cmd = { "ToggleTerm", "TermExec" },
@@ -230,7 +231,7 @@ return {
       default = {
         find = {
           -- pick one of item in find_engine [ fd, rg ]
-          cmd = "fd",
+          cmd = "rg",
           options = {}
         },
         replace = {

@@ -186,16 +186,16 @@ return {
     version = '*',
     opts = {
       mappings = {
-        add = ',sa',        -- Add surrounding in Normal and Visual modes
-        delete = ',sd',     -- Delete surrounding
-        find = ',sf',       -- Find surrounding (to the right)
-        find_left = ',sF',  -- Find surrounding (to the left)
-        highlight = ',sh',  -- Highlight surrounding
-        replace = ',sr',    -- Replace surrounding
+        add = ',sa',            -- Add surrounding in Normal and Visual modes
+        delete = ',sd',         -- Delete surrounding
+        find = ',sf',           -- Find surrounding (to the right)
+        find_left = ',sF',      -- Find surrounding (to the left)
+        highlight = ',sh',      -- Highlight surrounding
+        replace = ',sr',        -- Replace surrounding
         update_n_lines = ',sn', -- Update `n_lines`
 
-        suffix_last = 'h',  -- Suffix to search with "prev" method
-        suffix_next = 'l',  -- Suffix to search with "next" method
+        suffix_last = 'h',      -- Suffix to search with "prev" method
+        suffix_next = 'l',      -- Suffix to search with "next" method
       },
 
     }
@@ -608,7 +608,7 @@ return {
   --     require("focus").setup()
   --   end,
   -- },
-  -- { "kevinhwang91/nvim-bqf" },
+  { "kevinhwang91/nvim-bqf" },
   -- {
   --   "yorickpeterse/nvim-pqf",
   --   config = function()
@@ -803,54 +803,134 @@ return {
       "nvim-lua/plenary.nvim",
     },
   },
- {
-  "roobert/activate.nvim",
-  keys = {
-    {
-      "<leader>zi",
-      '<CMD>lua require("activate").list_plugins()<CR>',
-      desc = "Plugins",
-    },
-  }
-},
---   {
--- "uga-rosa/translate.nvim",
--- config = function ()
---   require("translate").setup({
---     default = {
---         -- command = "deepl_pro",
---     },
---
---     preset = {
---         command = {
---       google = {
---         args = {"http://proxy.onera:80"},
---       },
---         },
---         output = {
---             split = {
---                 append = true,
---             },
---         },
---     },
--- })
--- end
---   },
--- {
---   'Wansmer/symbol-usage.nvim',
---   event = 'LspAttach', -- need run before LspAttach if you use nvim 0.9. On 0.10 use 'LspAttach'
---   config = function()
---     require('symbol-usage').setup()
---   end
--- },
+  {
+    "roobert/activate.nvim",
+    keys = {
+      {
+        "<leader>zi",
+        '<CMD>lua require("activate").list_plugins()<CR>',
+        desc = "Plugins",
+      },
+    }
+  },
+  --   {
+  -- "uga-rosa/translate.nvim",
+  -- config = function ()
+  --   require("translate").setup({
+  --     default = {
+  --         -- command = "deepl_pro",
+  --     },
+  --
+  --     preset = {
+  --         command = {
+  --       google = {
+  --         args = {"http://proxy.onera:80"},
+  --       },
+  --         },
+  --         output = {
+  --             split = {
+  --                 append = true,
+  --             },
+  --         },
+  --     },
+  -- })
+  -- end
+  --   },
+  -- {
+  --   'Wansmer/symbol-usage.nvim',
+  --   event = 'LspAttach', -- need run before LspAttach if you use nvim 0.9. On 0.10 use 'LspAttach'
+  --   config = function()
+  --     require('symbol-usage').setup()
+  --   end
+  -- },
   -- {"marxin/neo-rtags",
   --  config = function()
   --     -- require("neo-rtags").setup()
   --   end,
   -- },
-    {
-        "sontungexpt/stcursorword",
-        event = "VeryLazy",
-        config = true,
-    },
+  {
+    "sontungexpt/stcursorword",
+    event = "VeryLazy",
+    config = true,
+  },
+  {
+    "niuiic/git-log.nvim",
+    dependencies = "niuiic/core.nvim",
+    event = "VeryLazy",
+  },
+  -- {
+  --   "JMarkin/gentags.lua",
+  --   cond = vim.fn.executable("ctags") == 1,
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --   },
+  --   config = function()
+  --     require("gentags").setup({})
+  --   end,
+  --   event = "VeryLazy",
+  -- },
+  -- {
+  --   'nvimdev/hlsearch.nvim',
+  --   event = 'BufRead',
+  --   config = function()
+  --     require('hlsearch').setup()
+  --   end
+  -- },
+  {
+    'gsuuon/tshjkl.nvim',
+    config = true,
+    opts = {
+      keymaps = {
+        toggle = '<leader>lz',
+      },
+      -- marks = {
+      --   parent = {
+      --     virt_text = { {'h', 'ModeMsg'} },
+      --     virt_text_pos = 'overlay'
+      --   },
+      --   child = {
+      --     virt_text = { {'l', 'ModeMsg'} },
+      --     virt_text_pos = 'overlay'
+      --   },
+      --   prev = {
+      --     virt_text = { {'k', 'ModeMsg'} },
+      --     virt_text_pos = 'overlay'
+      --   },
+      --   next = {
+      --     virt_text = { {'j', 'ModeMsg'} },
+      --     virt_text_pos = 'overlay'
+      --   }
+      -- }
+    }
+  },
+  {
+    "niuiic/terminal.nvim",
+    event = "VeryLazy",
+  },
+  {
+    'vidocqh/auto-indent.nvim',
+    opts = {},
+  },
+  {
+    "mangelozzi/nvim-rgflow.lua",
+    event = "VeryLazy",
+    config = function()
+      require("rgflow").setup(
+        {
+          default_trigger_mappings = true,
+          default_ui_mappings = true,
+          default_quickfix_mappings = true,
+
+          -- WARNING !!! Glob for '-g *{*}' will not use .gitignore file: https://github.com/BurntSushi/ripgrep/issues/2252
+          cmd_flags = ("--smart-case -g *.{*,py} -g !*.{min.js,pyc} --fixed-strings --no-fixed-strings --no-ignore -M 500"
+            -- Exclude globs
+            .. " -g !**/.angular/"
+            .. " -g !**/node_modules/"
+            .. " -g !**/static/*/jsapp/"
+            .. " -g !**/static/*/wcapp/"
+          )
+        }
+      )
+    end,
+  },
 }
